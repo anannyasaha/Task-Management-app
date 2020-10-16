@@ -4,7 +4,7 @@ The starter code for the major group project.
 Group members (3-5) (no Student IDs, only names):
 1. Michael Loo (Michael-Loo-2000)
 2. Martin Truong (100708410-uoit)
-3. Anannya Saha (100669554)
+3. Anannya Saha (anannyasaha)
 4. Group Member4 (github_username4)
 5. Group Member5 (github_username5)
 
