@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'utilities.dart';
 import 'tab_page.dart';
 import 'list_view.dart';
 import 'grid_view.dart';
@@ -18,6 +18,8 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: MainPage(title: 'Home Page'),
+      routes:<String,WidgetBuilder>{'/utilities':(BuildContext context)=>
+        todolistpage(title:"My Todo list")}
     );
   }
 }
@@ -48,13 +50,7 @@ class _MainPageState extends State<MainPage> {
     ];
 
     floatingActionButton:
-    new FloatingActionButton(
-      tooltip: "Add Cat",
-      child: new Icon(Icons.add),
-      onPressed: () {
-        print("Add Event");
-      },
-    );
+
 
     return DefaultTabController(
       length: options.length,
@@ -64,6 +60,34 @@ class _MainPageState extends State<MainPage> {
           bottom: buildTabBar(options),
         ),
         body: buildTabBarView(options),
+        floatingActionButton:  new FloatingActionButton(
+          tooltip: "Add Event",
+          child: new Icon(Icons.add),
+          onPressed: () {
+            print("Add Event");
+          },
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          onTap: (int index){
+            setState(() {
+              if(index==0){
+                _gototodolistPage(context);
+              }
+            });
+          },
+          items:const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+                icon:Icon(Icons.list),
+              title:Text("Todo list"),
+
+            ),
+            BottomNavigationBarItem(
+              icon:Icon(Icons.alarm),
+              title:Text("Alarm")
+            )
+
+          ]
+        ),
       ),
     );
   }
@@ -93,7 +117,8 @@ class _MainPageState extends State<MainPage> {
       ],
     );
   }
-
+  Future<void> _gototodolistPage(context) async{
+    await Navigator.pushNamed(context, '/utilities');}
   Widget buildRowWidget() {
     return Container(
       height: 80.0,
@@ -102,19 +127,19 @@ class _MainPageState extends State<MainPage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Container(
-            width: 80.0,
+            width: 50.0,
             color: Colors.red,
           ),
           Container(
-            width: 80.0,
+            width: 50.0,
             color: Colors.blue,
           ),
           Container(
-            width: 80.0,
+            width: 50.0,
             color: Colors.green,
           ),
           Container(
-            width: 80.0,
+            width: 50.0,
             color: Colors.amber,
           ),
         ],
