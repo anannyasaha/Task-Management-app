@@ -3,7 +3,7 @@ import 'utilities.dart';
 import 'tab_page.dart';
 import 'list_view.dart';
 import 'grid_view.dart';
-
+import 'addtodopage.dart';
 void main() {
   runApp(MyApp());
 }
@@ -19,7 +19,9 @@ class MyApp extends StatelessWidget {
       ),
       home: MainPage(title: 'Home Page'),
       routes:<String,WidgetBuilder>{'/utilities':(BuildContext context)=>
-        todolistpage(title:"My Todo list")}
+        todolistpage(title:"My Todo list"),
+          '/addtodopage':(BuildContext context)=>
+              addtodo(title:"Add todo"),}
     );
   }
 }
