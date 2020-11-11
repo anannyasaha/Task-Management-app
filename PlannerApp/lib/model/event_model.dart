@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:events_demo/models/event_info.dart';
+import 'package:PlannerApp/model/event_info.dart';
 import 'package:flutter/material.dart';
 
 final CollectionReference mainCollection = FirebaseFirestore.instance.collection('events');
 final DocumentReference reference = mainCollection.doc('test');
 
-class Storage {
+class FirestoreUtils {
+  //add event to Firestore
   Future<void> storeEventData(EventInfo eventInfo) async {
     DocumentReference documentReferencer = reference.collection('events').doc(eventInfo.id);
     Map<String, dynamic> events = eventInfo.toJson();
@@ -16,7 +17,7 @@ class Storage {
     }).catchError((e) => print(e));
   }
 
-  //update Google Calendar event
+  //update event in Firestore
   Future<void> updateEventData(EventInfo eventInfo) async {
     DocumentReference ref = reference.collection('events').doc(eventInfo.id);
     Map<String, dynamic> data = eventInfo.toJson();
@@ -27,7 +28,7 @@ class Storage {
     }).catchError((e) => print(e));
   }
 
-  //delete event from Google Calendar
+  //delete event from Firestore
   Future<void> deleteEvent({@required String id}) async {
     DocumentReference ref = reference.collection('events').doc(id);
     print('Event deleted, id: $id');
@@ -35,7 +36,7 @@ class Storage {
     await ref.delete().catchError((e) => print(e));
   }
 
-  //get events from firestore
+  //get events from Firestore
   Stream<QuerySnapshot> retrieveEvents() {
     Stream<QuerySnapshot> eventStream = reference.collection('events').orderBy('start').snapshots();
     return eventStream;
