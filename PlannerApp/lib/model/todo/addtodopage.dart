@@ -1,4 +1,4 @@
-import 'package:PlannerApp/todomodel.dart';
+import 'package:PlannerApp/model/todo/todomodel.dart';
 import 'package:flutter/material.dart';
 import 'todo.dart';
 class addtodo extends StatefulWidget {

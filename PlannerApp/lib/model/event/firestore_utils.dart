@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:PlannerApp/model/event_info.dart';
+import 'package:PlannerApp/model/event/event_info.dart';
 import 'package:flutter/material.dart';
 
+//initialize Firebase
 final CollectionReference mainCollection = FirebaseFirestore.instance.collection('events');
-final DocumentReference reference = mainCollection.doc('test');
+final DocumentReference reference = mainCollection.doc('calendar');
 
 class FirestoreUtils {
   //add event to Firestore
@@ -38,7 +39,7 @@ class FirestoreUtils {
 
   //get events from Firestore
   Stream<QuerySnapshot> retrieveEvents() {
-    Stream<QuerySnapshot> eventStream = reference.collection('events').orderBy('start').snapshots();
+    Stream<QuerySnapshot> eventStream = reference.collection('events').orderBy('date').snapshots();
     return eventStream;
   }
 }

@@ -1,9 +1,8 @@
-import 'package:PlannerApp/todo.dart';
-import 'package:PlannerApp/todomodel.dart';
+import 'package:PlannerApp/model/todo/todo.dart';
+import 'package:PlannerApp/model/todo/todomodel.dart';
 import 'package:flutter/material.dart';
-import 'todomodel.dart';
-import 'addtodopage.dart';
 import 'main.dart';
+
 class todolistpage extends StatefulWidget {
   String title;
 
