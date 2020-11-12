@@ -25,11 +25,11 @@ class EventInfo {
   EventInfo.fromMap(Map<String, dynamic> snapshot) {
     this.name = snapshot['name'];
     this.date = snapshot['date'];
-    this.startTime = snapshot['startTime'];
-    this.endTime = snapshot['endTime'];
-    this.description = snapshot['description'];
-    this.location = snapshot['location'];
-    this.shouldNotify = snapshot['shouldNotify'];
+    this.startTime = snapshot['start'];
+    this.endTime = snapshot['end'];
+    this.description = snapshot['desc'];
+    this.location = snapshot['loc'];
+    this.shouldNotify = snapshot['notify'];
   }
 
   //add event as JSON

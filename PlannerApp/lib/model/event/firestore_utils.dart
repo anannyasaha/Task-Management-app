@@ -3,13 +3,15 @@ import 'package:PlannerApp/model/event/event_info.dart';
 import 'package:flutter/material.dart';
 
 //initialize Firebase
-final CollectionReference mainCollection = FirebaseFirestore.instance.collection('events');
-final DocumentReference reference = mainCollection.doc('calendar');
+final String collectionPath = "events";
+final String collectionDoc = "calendar";
+final CollectionReference mainCollection = FirebaseFirestore.instance.collection(collectionPath);
+final DocumentReference reference = mainCollection.doc(collectionDoc);
 
 class FirestoreUtils {
   //add event to Firestore
   Future<void> storeEventData(EventInfo eventInfo) async {
-    DocumentReference documentReferencer = reference.collection('events').doc(eventInfo.id);
+    DocumentReference documentReferencer = reference.collection(collectionPath).doc(eventInfo.id);
     Map<String, dynamic> events = eventInfo.toJson();
     print('Get events:\n$events');
 
@@ -20,7 +22,7 @@ class FirestoreUtils {
 
   //update event in Firestore
   Future<void> updateEventData(EventInfo eventInfo) async {
-    DocumentReference ref = reference.collection('events').doc(eventInfo.id);
+    DocumentReference ref = reference.collection(collectionPath).doc(eventInfo.id);
     Map<String, dynamic> data = eventInfo.toJson();
     print('Get events:\n$data');
 
@@ -31,7 +33,7 @@ class FirestoreUtils {
 
   //delete event from Firestore
   Future<void> deleteEvent({@required String id}) async {
-    DocumentReference ref = reference.collection('events').doc(id);
+    DocumentReference ref = reference.collection(collectionPath).doc(id);
     print('Event deleted, id: $id');
 
     await ref.delete().catchError((e) => print(e));
@@ -39,7 +41,7 @@ class FirestoreUtils {
 
   //get events from Firestore
   Stream<QuerySnapshot> retrieveEvents() {
-    Stream<QuerySnapshot> eventStream = reference.collection('events').orderBy('date').snapshots();
+    Stream<QuerySnapshot> eventStream = reference.collection(collectionPath).orderBy('date').snapshots();
     return eventStream;
   }
 }
