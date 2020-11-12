@@ -2,8 +2,6 @@ import 'package:PlannerApp/model/todo/addtodopage.dart';
 import 'package:flutter/material.dart';
 import 'utilities.dart';
 import 'tab_page.dart';
-import 'list_view.dart';
-import 'grid_view.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 void main() {
@@ -49,7 +47,7 @@ class _MainPageState extends State<MainPage> {
     var androidInitialize = new AndroidInitializationSettings('app_icon');
     var iOSinitialize = new IOSInitializationSettings();
     var initializationsSettings =
-        new InitializationSettings(androidInitialize, iOSinitialize);
+        new InitializationSettings();
     flutterNotif = new FlutterLocalNotificationsPlugin();
     flutterNotif.initialize(initializationsSettings,
         onSelectNotification: notificationSelected);
@@ -282,8 +280,7 @@ class _MainPageState extends State<MainPage> {
         "Project ID", "Group Project", "text...",
         importance: Importance.Max);
     var IOSDetails = new IOSNotificationDetails();
-    var generalNotificationDetails =
-        new NotificationDetails(androidDetails, IOSDetails);
+    var generalNotificationDetails = new NotificationDetails();
 
     await flutterNotif.show(
         0, "Notification", "Test notification", generalNotificationDetails,
