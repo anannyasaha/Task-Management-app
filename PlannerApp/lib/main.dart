@@ -68,7 +68,6 @@ class _MainPageState extends State<MainPage> {
       ),
     ];
 
-  
     floatingActionButton:
     return DefaultTabController(
       length: options.length,
@@ -300,15 +299,15 @@ class _MainPageState extends State<MainPage> {
 
     // var scheduledTime = DateTime.now().add(Duration(seconds: 5));
 
-    flutterNotif.schedule(1, "Time Reached", task,
-        scheduledTime, generalNotificationDetails);
+    flutterNotif.schedule(
+        1, "Time Reached", task, scheduledTime, generalNotificationDetails);
   }
 
   Future notificationSelected(String payload) async {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        content: Text("$payload"),
+        content: Text("$payload Notification Acknowledged"),
       ),
     );
   }
