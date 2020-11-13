@@ -21,9 +21,10 @@ class _todolistpageState extends State<todolistpage> {
       appBar:AppBar(
           title:Text(widget.title) ,
         actions:[IconButton(
-          icon:Icon(Icons.edit),
+          icon:Icon(Icons.arrow_back),
           onPressed: (){
            // _gotoeditpage();
+            Navigator.of(context).pop();
           },
         ),IconButton(
           icon:Icon(Icons.add),
