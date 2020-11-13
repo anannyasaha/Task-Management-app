@@ -10,3 +10,6 @@ When starting app, you will see a top tab bar of reminders and events.
 On the bottom tab bar is the too do list and the alarm
 	-Too do list: (implemented)...
 	-alarm: (not yet finished)
+	
+Contributions:
+ - Firebase and Cloud Storage (Martin Truong)
