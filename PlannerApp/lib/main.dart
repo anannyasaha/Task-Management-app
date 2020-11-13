@@ -46,8 +46,7 @@ class _MainPageState extends State<MainPage> {
     super.initState();
     var androidInitialize = new AndroidInitializationSettings('app_icon');
     var iOSinitialize = new IOSInitializationSettings();
-    var initializationsSettings =
-        new InitializationSettings();
+    var initializationsSettings = new InitializationSettings(androidInitialize, iOSinitialize);
     flutterNotif = new FlutterLocalNotificationsPlugin();
     flutterNotif.initialize(initializationsSettings,
         onSelectNotification: notificationSelected);
@@ -278,10 +277,10 @@ class _MainPageState extends State<MainPage> {
   Future _showNotification() async {
     var androidDetails = new AndroidNotificationDetails(
         "Project ID", "Group Project", "text...",
-        importance: Importance.max);
+        importance: Importance.Max);
     var IOSDetails = new IOSNotificationDetails();
     var generalNotificationDetails =
-        new NotificationDetails();
+        new NotificationDetails(androidDetails, IOSDetails);
 
     await flutterNotif.show(
         0, "Notification", "Test notification", generalNotificationDetails,
