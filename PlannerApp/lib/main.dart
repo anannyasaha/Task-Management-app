@@ -46,7 +46,8 @@ class _MainPageState extends State<MainPage> {
     super.initState();
     var androidInitialize = new AndroidInitializationSettings('app_icon');
     var iOSinitialize = new IOSInitializationSettings();
-    var initializationsSettings = new InitializationSettings(androidInitialize, iOSinitialize);
+    var initializationsSettings =
+        new InitializationSettings(androidInitialize, iOSinitialize);
     flutterNotif = new FlutterLocalNotificationsPlugin();
     flutterNotif.initialize(initializationsSettings,
         onSelectNotification: notificationSelected);
@@ -67,94 +68,7 @@ class _MainPageState extends State<MainPage> {
       ),
     ];
 
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: TextField(
-                decoration: InputDecoration(border: OutlineInputBorder()),
-                onChanged: (_val) {
-                  task = _val;
-                },
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                DropdownButton(
-                  value: _selectedParam,
-                  items: [
-                    DropdownMenuItem(
-                      child: Text("Seconds"),
-                      value: "Seconds",
-                    ),
-                    DropdownMenuItem(
-                      child: Text("Minutes"),
-                      value: "Minutes",
-                    ),
-                    DropdownMenuItem(
-                      child: Text("Hour"),
-                      value: "Hour",
-                    ),
-                  ],
-                  hint: Text(
-                    "Select Your Field.",
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),
-                  ),
-                  onChanged: (_val) {
-                    setState(() {
-                      _selectedParam = _val;
-                    });
-                  },
-                ),
-                DropdownButton(
-                  value: val,
-                  items: [
-                    DropdownMenuItem(
-                      child: Text("1"),
-                      value: 1,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("2"),
-                      value: 2,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("3"),
-                      value: 3,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("4"),
-                      value: 4,
-                    ),
-                  ],
-                  hint: Text(
-                    "Select Value",
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),
-                  ),
-                  onChanged: (_val) {
-                    setState(() {
-                      val = _val;
-                    });
-                  },
-                ),
-              ],
-            ),
-            RaisedButton(
-              onPressed: _showNotification,
-              child: new Text('Set Task With Notification'),
-            )
-          ],
-        ),
-      ),
-    );
-
+  
     floatingActionButton:
     return DefaultTabController(
       length: options.length,
@@ -250,27 +164,114 @@ class _MainPageState extends State<MainPage> {
   }
 
   Widget buildColumnWidget() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        FlutterLogo(
-          size: 40.0,
-          textColor: Colors.red,
+    // return Column(
+    //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    //   crossAxisAlignment: CrossAxisAlignment.center,
+    //   children: <Widget>[
+    //     FlutterLogo(
+    //       size: 40.0,
+    //       textColor: Colors.red,
+    //     ),
+    //     FlutterLogo(
+    //       size: 40.0,
+    //       textColor: Colors.blue,
+    //     ),
+    //     FlutterLogo(
+    //       size: 40.0,
+    //       textColor: Colors.green,
+    //     ),
+    //     FlutterLogo(
+    //       size: 40.0,
+    //       textColor: Colors.amber,
+    //     ),
+    //   ],
+    // );
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: TextField(
+                decoration: InputDecoration(border: OutlineInputBorder()),
+                onChanged: (_val) {
+                  task = _val;
+                },
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                DropdownButton(
+                  value: _selectedParam,
+                  items: [
+                    DropdownMenuItem(
+                      child: Text("Seconds"),
+                      value: "Seconds",
+                    ),
+                    DropdownMenuItem(
+                      child: Text("Minutes"),
+                      value: "Minutes",
+                    ),
+                    DropdownMenuItem(
+                      child: Text("Hour"),
+                      value: "Hour",
+                    ),
+                  ],
+                  hint: Text(
+                    "Select Your Field.",
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                  ),
+                  onChanged: (_val) {
+                    setState(() {
+                      _selectedParam = _val;
+                    });
+                  },
+                ),
+                DropdownButton(
+                  value: val,
+                  items: [
+                    DropdownMenuItem(
+                      child: Text("1"),
+                      value: 1,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("2"),
+                      value: 2,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("3"),
+                      value: 3,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("4"),
+                      value: 4,
+                    ),
+                  ],
+                  hint: Text(
+                    "Select Value",
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                  ),
+                  onChanged: (_val) {
+                    setState(() {
+                      val = _val;
+                    });
+                  },
+                ),
+              ],
+            ),
+            RaisedButton(
+              onPressed: _showNotification,
+              child: new Text('Set Task With Notification'),
+            )
+          ],
         ),
-        FlutterLogo(
-          size: 40.0,
-          textColor: Colors.blue,
-        ),
-        FlutterLogo(
-          size: 40.0,
-          textColor: Colors.green,
-        ),
-        FlutterLogo(
-          size: 40.0,
-          textColor: Colors.amber,
-        ),
-      ],
+      ),
     );
   }
 
@@ -282,33 +283,32 @@ class _MainPageState extends State<MainPage> {
     var generalNotificationDetails =
         new NotificationDetails(androidDetails, IOSDetails);
 
-    await flutterNotif.show(
-        0, "Notification", "Test notification", generalNotificationDetails,
-        payload: "Notification");
+    // await flutterNotif.show(
+    //     0, "Notification", "Test notification", generalNotificationDetails,
+    //     payload: "Notification");
+
+    var scheduledTime;
+
+    if (_selectedParam == "Seconds") {
+      scheduledTime = DateTime.now().add(Duration(seconds: 3));
+    } else if (_selectedParam == "Minute") {
+      scheduledTime = DateTime.now().add(Duration(minutes: 1));
+    } else {
+      //slected hour
+      scheduledTime = DateTime.now().add(Duration(hours: 1));
+    }
 
     // var scheduledTime = DateTime.now().add(Duration(seconds: 5));
 
-    // flutterNotif.schedule(1, "Notification", "Schedules Notifcation",
-    // scheduledTime, generalNotificationDetails)
+    flutterNotif.schedule(1, "Time Reached", task,
+        scheduledTime, generalNotificationDetails);
   }
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //     body: Center(
-  //       child: RaisedButton(
-  //         onPressed: _showNotifications,
-  //         child: Text("Flutter Notifications"),
-  //       ),
-  //     ),
-  //   );
-  // }
 
   Future notificationSelected(String payload) async {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        content: Text("Notification Clicked $payload"),
+        content: Text("$payload"),
       ),
     );
   }
