@@ -5,7 +5,7 @@ When starting app, you will see a top tab bar of reminders and events.
 		 and you will see a text box come up acknowledging you have clicked/dismissed the notification. Click anywhere else
                  on the screen to continue past the textbox
 	-Events: (not yet finished) will be for things that you intend to plan for past the current day. Will include details such
-		 as time, location, links, text details...
+		 as time, location, links, text detaills, you will be able to view your upcoming events and be notified for when they come
 
 On the bottom tab bar is the too do list and the alarm
 	-Too do list: (implemented)...
