@@ -241,6 +241,14 @@ class _MainPageState extends State<MainPage> {
                     });
                   },
                 ),
+                // TextField(
+                //   controller:  = _val,
+                //   decoration: InputDecoration(
+                //   border: OutlineInputBorder(),
+                //   labelText: "Time Value: ",
+                //   ),
+                //   keyboardType: TextInputType.number,
+                // ),
                 DropdownButton(
                   value: val,
                   items: [
@@ -277,7 +285,7 @@ class _MainPageState extends State<MainPage> {
             ),
             RaisedButton(
               onPressed: _showNotification,
-              child: new Text('Set Task With Notification'),
+              child: new Text('Set Reminder With Notification'),
             )
           ],
         ),
