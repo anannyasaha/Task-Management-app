@@ -1,6 +1,14 @@
 import 'package:PlannerApp/model/todo/todomodel.dart';
 import 'package:flutter/material.dart';
 import 'todo.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:PlannerApp/main.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
+class CallsAndMessagesService {
+  void sendEmail(String email) => launch("mailto:$email");
+
+  }
+
 class addtodo extends StatefulWidget {
  final String title;
   addtodo({Key key,this.title}):super(key:key);
@@ -9,6 +17,7 @@ class addtodo extends StatefulWidget {
 }
 
 class _addtodoState extends State<addtodo> {
+  final CallsAndMessagesService _service = locator<CallsAndMessagesService>();
   String description="";
   String priority;
   String dateoftodo="Enter date";
@@ -41,8 +50,7 @@ class _addtodoState extends State<addtodo> {
   }
   Widget createform(BuildContext context){
     TextEditingController _controller=TextEditingController();
-    TextEditingController _controller3=TextEditingController();
-    TextEditingController _controller4=TextEditingController();
+
 
     List<String> items=["High","Moderate","Low"];
     // String dateoftodo=toDateString(DateTime.now());
@@ -137,10 +145,8 @@ class _addtodoState extends State<addtodo> {
                     labelText: "Assignedto",),
                   controller: _controller2,
                   onTap: ()async{
-                    String name=await _customDialog(context);
-                    setState(() {
-                      _controller2.text=name;
-                    });
+                    await _customDialog(context);
+
 
                   },
                   onSaved: (String value) {
@@ -179,7 +185,7 @@ class _addtodoState extends State<addtodo> {
   }
 
 
- Future<String> _customDialog(BuildContext context) {
+ Future<void> _customDialog(BuildContext context) {
    String name;
     return showDialog<void>(
         context: context,
@@ -215,8 +221,8 @@ class _addtodoState extends State<addtodo> {
 
             actions:[RaisedButton(
               child:Text("Done"),
-              onPressed: (){
-                print('$emailaddress');
+              onPressed: () {
+                send();
                 Navigator.of(context).pop(name);
                 _controller2.text=name;
               },
@@ -228,62 +234,83 @@ class _addtodoState extends State<addtodo> {
         );
         }
     );}
-  String _toTimeString(DateTime date) {
-    return '${_twoDigits(date.hour)}:${_twoDigits(date.minute)}';
-  }
-  String _twoDigits(int value) {
-    if (value < 10) {
-      return '0$value';
-    } else {
-      return '$value';
-    }
-  }
-  String toOrdinal(number) {
-    if ((number >= 10) && (number <= 19)) {
-      return number.toString() + 'th';
-    } else if ((number % 10) == 1) {
-      return number.toString() + 'st';
-    } else if ((number % 10) == 2) {
-      return number.toString() + 'nd';
-    } else if ((number % 10) == 3) {
-      return number.toString() + 'rd';
-    } else {
-      return number.toString() + 'th';
+  Future<void> send() async {
+    final Email email = Email(
+      body: 'Description: $description \n Due date: $dateoftodo \n Due time: $timeoftodo \n priority: $priority  Message: $message',
+      subject: 'Task for you',
+      recipients: ['$emailaddress'],
+      isHTML: true,
+    );
+
+    String platformResponse;
+    try {
+      await FlutterEmailSender.send(email);
+      platformResponse = 'success';
+    } catch (error) {
+      platformResponse = error.toString();
     }
   }
 
-  String toMonthName(monthNum) {
-    switch (monthNum) {
-      case 1:
-        return 'January';
-      case 2:
-        return 'February';
-      case 3:
-        return 'March';
-      case 4:
-        return 'April';
-      case 5:
-        return 'May';
-      case 6:
-        return 'June';
-      case 7:
-        return 'July';
-      case 8:
-        return 'August';
-      case 9:
-        return 'September';
-      case 10:
-        return 'October';
-      case 11:
-        return 'November';
-      case 12:
-        return 'December';
-      default:
-        return 'Error';
-    }
-  }
 
-  String toDateString(DateTime date) {
-    return '${toMonthName(date.month)} ${toOrdinal(date.day)}';
+
+}
+String _toTimeString(DateTime date) {
+  return '${_twoDigits(date.hour)}:${_twoDigits(date.minute)}';
+}
+String _twoDigits(int value) {
+  if (value < 10) {
+    return '0$value';
+  } else {
+    return '$value';
   }
+}
+String toOrdinal(number) {
+  if ((number >= 10) && (number <= 19)) {
+    return number.toString() + 'th';
+  } else if ((number % 10) == 1) {
+    return number.toString() + 'st';
+  } else if ((number % 10) == 2) {
+    return number.toString() + 'nd';
+  } else if ((number % 10) == 3) {
+    return number.toString() + 'rd';
+  } else {
+    return number.toString() + 'th';
+  }
+}
+
+String toMonthName(monthNum) {
+  switch (monthNum) {
+    case 1:
+      return 'January';
+    case 2:
+      return 'February';
+    case 3:
+      return 'March';
+    case 4:
+      return 'April';
+    case 5:
+      return 'May';
+    case 6:
+      return 'June';
+    case 7:
+      return 'July';
+    case 8:
+      return 'August';
+    case 9:
+      return 'September';
+    case 10:
+      return 'October';
+    case 11:
+      return 'November';
+    case 12:
+      return 'December';
+    default:
+      return 'Error';
+  }
+}
+String toDateString(DateTime date) {
+  return '${toMonthName(date.month)} ${toOrdinal(date.day)}';
+}
+String toTomoroowString(DateTime date) {
+  return '${toMonthName(date.month)} ${toOrdinal(date.day+1)}';
 }

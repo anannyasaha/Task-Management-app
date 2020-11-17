@@ -13,7 +13,8 @@ class todolistpage extends StatefulWidget {
 }
 
 class _todolistpageState extends State<todolistpage> {
-  List<String> drawerItems=["All Tasks","Today","Tomorrow","This week","Assigned task"];
+
+  List<String> drawerItems=["All Tasks","Today","Tomorrow","Assigned task"];
   final _todomodel=new todomodel();
   @override
   Widget build(BuildContext context) {
@@ -60,31 +61,30 @@ class _todolistpageState extends State<todolistpage> {
               child: ListView(children: [
                 ListTile(
                  title: Text(drawerItems[0]),
-                 trailing: IconButton(
-                   icon:Icon(Icons.add),
+                 trailing: Icon(Icons.arrow_forward),
+                onTap: () {
+                   gettodolist();
+                   },
 
                  ),
-               onTap: () {
-                 Navigator.of(context).pop();
-               },
-               ),
+
                ListTile(
                 title: Text(drawerItems[1]),
-                 trailing: Icon(Icons.add),
+                 trailing: Icon(Icons.arrow_forward),
                 onTap: () {
-               Navigator.of(context).pop();
+               gettodaylist();
                 },
               ),
                ListTile(
                  title: Text(drawerItems[2]),
-                trailing: Icon(Icons.add),
+                trailing: Icon(Icons.arrow_forward),
               onTap: () {
-               Navigator.of(context).pop();
+               gettomorrowlist();
                 },
               ),
                 ListTile(
                   title: Text(drawerItems[3]),
-                  trailing: Icon(Icons.add),
+                  trailing: Icon(Icons.arrow_forward),
               onTap: () {
                     Navigator.of(context).pop();
               },
@@ -114,11 +114,32 @@ class _todolistpageState extends State<todolistpage> {
     });
 
   }
+  Future<void> gettodaylist()async{
+    List<todo> alltodofortoday=await _todomodel.gettodaytodos();
+    setState(() {
+      _todos=alltodofortoday;
+    });
+
+  }
+  Future<void> gettomorrowlist()async{
+    List<todo> alltodofortomorrow=await _todomodel.gettoomorrowtodos();
+    setState(() {
+      _todos=alltodofortomorrow;
+    });
+
+  }
   @override
   void initState() {
     super.initState();
 
     gettodolist();
+  }
+  Color whichColor(String Priority){
+    if (Priority=="High")
+      return Colors.red;
+    else if(Priority=="Moderate") return Colors.yellow;
+    else  return Colors.green;
+
   }
   List<bool> selected=List.generate(100, (index) => false);
   Widget _createlistview(BuildContext context){
@@ -140,15 +161,18 @@ class _todolistpageState extends State<todolistpage> {
                   decoration: BoxDecoration(
                       border: Border(
                         left: BorderSide( //                   <--- left side
-                          color: Colors.black,
-                          width: 2.0,
+                          color: whichColor(_todos[index].priority),
+                          width:6.0,
                         ),
                   )),
                   child: ListTile(
 
                     title: Text(_todos[index].description),
-                    subtitle: Text(_todos[index].time),
+                    subtitle: Text(_todos[index].assignedto),
                     trailing: Text(_todos[index].date),
+                    leading: CircleAvatar(
+
+                        child: Text(_todos[index].time))
                   )
               )
           );

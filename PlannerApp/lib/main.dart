@@ -1,13 +1,20 @@
 import 'package:PlannerApp/model/todo/addtodopage.dart';
 import 'package:flutter/material.dart';
 import 'utilities.dart';
-import 'tab_page.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import "model/event/form_event.dart";
+import 'package:get_it/get_it.dart';
+import 'tab_page.dart';
 
+GetIt  locator = GetIt();
+
+void setupLocator() {
+  locator.registerSingleton(CallsAndMessagesService());}
 void main() {
+  setupLocator();
   runApp(MyApp());
-}
 
+}
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -22,6 +29,8 @@ class MyApp extends StatelessWidget {
           '/utilities': (BuildContext context) =>
               todolistpage(title: "My Todo list"),
           '/addtodopage': (BuildContext context) => addtodo(title: "Add todo"),
+
+          '/form-event': (BuildContext context) => CalendarEvents(title: "calendar events")
         });
   }
 }
@@ -129,7 +138,9 @@ class _MainPageState extends State<MainPage> {
       ],
     );
   }
-
+  Future<void> _gotoeventsPage(context) async {
+    await Navigator.pushNamed(context, '/form_event');
+  }
   Future<void> _gototodolistPage(context) async {
     await Navigator.pushNamed(context, '/utilities');
   }

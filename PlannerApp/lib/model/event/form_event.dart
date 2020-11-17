@@ -21,7 +21,7 @@ class EventsPage extends State<CalendarEvents> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(widget.title)),
-      body: _buildList(context),
+      body: buildList(),
       floatingActionButton: new FloatingActionButton(
         tooltip: "Add event",
         child: const Icon(Icons.add),
@@ -33,7 +33,7 @@ class EventsPage extends State<CalendarEvents> {
     );
   }
 
-  Widget _buildList(BuildContext context) {
+  Widget buildList() {
     return StreamBuilder<QuerySnapshot>(
       stream: db.retrieveEvents(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
