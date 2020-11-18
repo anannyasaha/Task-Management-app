@@ -246,8 +246,10 @@ class _addtodoState extends State<addtodo> {
     try {
       await FlutterEmailSender.send(email);
       platformResponse = 'success';
+      print(platformResponse);
     } catch (error) {
       platformResponse = error.toString();
+      print(platformResponse);
     }
   }
 
@@ -311,6 +313,9 @@ String toMonthName(monthNum) {
 String toDateString(DateTime date) {
   return '${toMonthName(date.month)} ${toOrdinal(date.day)}';
 }
-String toTomoroowString(DateTime date) {
+String toTomorowString(DateTime date) {
   return '${toMonthName(date.month)} ${toOrdinal(date.day+1)}';
+}
+String toolddateString(DateTime date) {
+  return '${toMonthName(date.month)} ${toOrdinal(date.day-4)}';
 }

@@ -14,7 +14,7 @@ class todolistpage extends StatefulWidget {
 
 class _todolistpageState extends State<todolistpage> {
 
-  List<String> drawerItems=["All Tasks","Today","Tomorrow","Assigned task"];
+  List<String> drawerItems=["All Tasks","Today","Tomorrow","Assigned task","Old tasks"];
   final _todomodel=new todomodel();
   @override
   Widget build(BuildContext context) {
@@ -86,9 +86,16 @@ class _todolistpageState extends State<todolistpage> {
                   title: Text(drawerItems[3]),
                   trailing: Icon(Icons.arrow_forward),
               onTap: () {
-                    Navigator.of(context).pop();
+                    _gotoassignedlistpage();
               },
              ),
+                ListTile(
+                  title: Text(drawerItems[4]),
+                  trailing: Icon(Icons.arrow_forward),
+                  onTap: () {
+                    getOldtodos();
+                  },
+                ),
               ],
         ),
       ) ,]
@@ -100,6 +107,11 @@ class _todolistpageState extends State<todolistpage> {
 
   }
   List<todo> _todos=[];
+  Future<void> _gotoassignedlistpage() async{
+    var todopage=await Navigator.pushNamed(context, '/assignedtable');
+    gettodolist();
+
+  }
   int _SelectedIndex=0;
   Future<void> _gotoaddpage() async{
     var todopage=await Navigator.pushNamed(context, '/addtodopage');
@@ -107,6 +119,14 @@ class _todolistpageState extends State<todolistpage> {
     gettodolist();
 
   }
+  Future<void> getOldtodos()async{
+    List<todo> alltodos=await _todomodel.deleteoldtodos();
+    setState(() {
+      _todos=alltodos;
+    });
+
+  }
+
   Future<void> gettodolist()async{
     List<todo> alltodos=await _todomodel.getAlltodos();
     setState(() {
