@@ -1,7 +1,6 @@
 import 'package:PlannerApp/model/todo/todo.dart';
 import 'package:PlannerApp/model/todo/todomodel.dart';
 import 'package:flutter/material.dart';
-import 'main.dart';
 
 class todolistpage extends StatefulWidget {
   String title;
@@ -13,8 +12,7 @@ class todolistpage extends StatefulWidget {
 }
 
 class _todolistpageState extends State<todolistpage> {
-
-  List<String> drawerItems=["All Tasks","Today","Tomorrow","Assigned task","Old tasks"];
+  List<String> drawerItems=["All Tasks","Today","Tomorrow","This week","Assigned task"];
   final _todomodel=new todomodel();
   @override
   Widget build(BuildContext context) {
@@ -22,10 +20,9 @@ class _todolistpageState extends State<todolistpage> {
       appBar:AppBar(
           title:Text(widget.title) ,
         actions:[IconButton(
-          icon:Icon(Icons.arrow_back),
+          icon:Icon(Icons.edit),
           onPressed: (){
            // _gotoeditpage();
-            Navigator.of(context).pop();
           },
         ),IconButton(
           icon:Icon(Icons.add),
@@ -61,41 +58,35 @@ class _todolistpageState extends State<todolistpage> {
               child: ListView(children: [
                 ListTile(
                  title: Text(drawerItems[0]),
-                 trailing: Icon(Icons.arrow_forward),
-                onTap: () {
-                   gettodolist();
-                   },
+                 trailing: IconButton(
+                   icon:Icon(Icons.add),
 
                  ),
-
+               onTap: () {
+                 Navigator.of(context).pop();
+               },
+               ),
                ListTile(
                 title: Text(drawerItems[1]),
-                 trailing: Icon(Icons.arrow_forward),
+                 trailing: Icon(Icons.add),
                 onTap: () {
-               gettodaylist();
+               Navigator.of(context).pop();
                 },
               ),
                ListTile(
                  title: Text(drawerItems[2]),
-                trailing: Icon(Icons.arrow_forward),
+                trailing: Icon(Icons.add),
               onTap: () {
-               gettomorrowlist();
+               Navigator.of(context).pop();
                 },
               ),
                 ListTile(
                   title: Text(drawerItems[3]),
-                  trailing: Icon(Icons.arrow_forward),
+                  trailing: Icon(Icons.add),
               onTap: () {
-                    _gotoassignedlistpage();
+                    Navigator.of(context).pop();
               },
              ),
-                ListTile(
-                  title: Text(drawerItems[4]),
-                  trailing: Icon(Icons.arrow_forward),
-                  onTap: () {
-                    getOldtodos();
-                  },
-                ),
               ],
         ),
       ) ,]
@@ -107,11 +98,6 @@ class _todolistpageState extends State<todolistpage> {
 
   }
   List<todo> _todos=[];
-  Future<void> _gotoassignedlistpage() async{
-    var todopage=await Navigator.pushNamed(context, '/assignedtable');
-    gettodolist();
-
-  }
   int _SelectedIndex=0;
   Future<void> _gotoaddpage() async{
     var todopage=await Navigator.pushNamed(context, '/addtodopage');
@@ -119,32 +105,10 @@ class _todolistpageState extends State<todolistpage> {
     gettodolist();
 
   }
-  Future<void> getOldtodos()async{
-    List<todo> alltodos=await _todomodel.deleteoldtodos();
-    setState(() {
-      _todos=alltodos;
-    });
-
-  }
-
   Future<void> gettodolist()async{
     List<todo> alltodos=await _todomodel.getAlltodos();
     setState(() {
       _todos=alltodos;
-    });
-
-  }
-  Future<void> gettodaylist()async{
-    List<todo> alltodofortoday=await _todomodel.gettodaytodos();
-    setState(() {
-      _todos=alltodofortoday;
-    });
-
-  }
-  Future<void> gettomorrowlist()async{
-    List<todo> alltodofortomorrow=await _todomodel.gettoomorrowtodos();
-    setState(() {
-      _todos=alltodofortomorrow;
     });
 
   }
@@ -153,13 +117,6 @@ class _todolistpageState extends State<todolistpage> {
     super.initState();
 
     gettodolist();
-  }
-  Color whichColor(String Priority){
-    if (Priority=="High")
-      return Colors.red;
-    else if(Priority=="Moderate") return Colors.yellow;
-    else  return Colors.green;
-
   }
   List<bool> selected=List.generate(100, (index) => false);
   Widget _createlistview(BuildContext context){
@@ -181,18 +138,15 @@ class _todolistpageState extends State<todolistpage> {
                   decoration: BoxDecoration(
                       border: Border(
                         left: BorderSide( //                   <--- left side
-                          color: whichColor(_todos[index].priority),
-                          width:6.0,
+                          color: Colors.black,
+                          width: 2.0,
                         ),
                   )),
                   child: ListTile(
 
                     title: Text(_todos[index].description),
-                    subtitle: Text(_todos[index].assignedto),
+                    subtitle: Text(_todos[index].time),
                     trailing: Text(_todos[index].date),
-                    leading: CircleAvatar(
-
-                        child: Text(_todos[index].time))
                   )
               )
           );

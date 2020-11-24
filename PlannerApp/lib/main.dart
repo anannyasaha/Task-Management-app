@@ -1,11 +1,11 @@
 import 'package:PlannerApp/model/todo/addtodopage.dart';
 import 'package:PlannerApp/model/todo/assignedtable.dart';
 import 'package:flutter/material.dart';
-import 'utilities.dart';
+import 'helper/utilities.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import "model/event/form_event.dart";
 import 'package:get_it/get_it.dart';
-import 'tab_page.dart';
+import 'ui/tab_page.dart';
 
 GetIt  locator = GetIt();
 
