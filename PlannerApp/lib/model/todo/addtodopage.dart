@@ -2,12 +2,9 @@ import 'package:PlannerApp/model/todo/todomodel.dart';
 import 'package:flutter/material.dart';
 import 'todo.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:PlannerApp/main.dart';
-import 'package:flutter_email_sender/flutter_email_sender.dart';
-class CallsAndMessagesService {
-  void sendEmail(String email) => launch("mailto:$email");
 
-  }
+
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 
 class addtodo extends StatefulWidget {
  final String title;
@@ -17,25 +14,25 @@ class addtodo extends StatefulWidget {
 }
 
 class _addtodoState extends State<addtodo> {
-  final CallsAndMessagesService _service = locator<CallsAndMessagesService>();
+
   String description="";
   String priority;
   String dateoftodo="Enter date";
   String timeoftodo="Enter time";
-  String assignedto;
+  String assignedto="";
 
   final _todomodel=new todomodel();
   DateTime _eventDate = DateTime.now();
   final _formKey = GlobalKey<FormState>();
   String emailaddress="";
   String message="";
-  TextEditingController _controller2=TextEditingController();
+
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
       appBar: AppBar(
-        title:Text("Add todo"),
+        title:Text(widget.title),
         leading: IconButton(
             icon:Icon(Icons.arrow_back),
             onPressed:(){
@@ -48,76 +45,76 @@ class _addtodoState extends State<addtodo> {
 
     );
   }
-  Widget createform(BuildContext context){
-    TextEditingController _controller=TextEditingController();
+         Widget createform(BuildContext context){
+      TextEditingController _controller=TextEditingController();
 
 
-    List<String> items=["High","Moderate","Low"];
-    // String dateoftodo=toDateString(DateTime.now());
-    // String timeoftodo=_toTimeString(DateTime.now());
-    DateTime rightNow = DateTime.now();
-    return SingleChildScrollView(
-      child: new Form(
-          key: _formKey,
-          child: Column(
-              children: <Widget>[
-                TextFormField(
-                    decoration: const InputDecoration(
-                      labelText: "Description",
-                    ),
+      List<String> items=["High","Moderate","Low"];
+      // String dateoftodo=toDateString(DateTime.now());
+      // String timeoftodo=_toTimeString(DateTime.now());
+      DateTime rightNow = DateTime.now();
+      return SingleChildScrollView(
+        child: new Form(
+            key: _formKey,
+            child: Column(
+                children: <Widget>[
+                  TextFormField(
+                      decoration: const InputDecoration(
+                        labelText: "Description",
+                      ),
 
-                    validator: (String value) {
-                      print("Validating");
-                      if (value.isEmpty) {
-                        return "Description required";
-                      }
-                      return null;
-                    },
-                    onSaved: (String value) {
-                      description = value;
-                    }),
-                Divider(),
+                      validator: (String value) {
+                        print("Validating");
+                        if (value.isEmpty) {
+                          return "Description required";
+                        }
+                        return null;
+                      },
+                      onSaved: (String value) {
+                        description = value;
+                      }),
+                  Divider(),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    FlatButton(
-                      child:Text(dateoftodo),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      FlatButton(
+                        child:Text(dateoftodo),
 
-                      onPressed:()async {
-                        DateTime date=await showDatePicker(
-                            context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime.now(),
-                            lastDate: DateTime(2021));
-                        setState(() {
-                          dateoftodo=toDateString(date);
-
-                        });
-                      },),
-                    FlatButton(
-                      child:Text(timeoftodo),
-                      onPressed:()async {
-                        TimeOfDay time=await showTimePicker(
-                            context: context,
-                            initialTime:TimeOfDay(hour:rightNow.hour,minute:rightNow.minute))
-                            .then((value) {
+                        onPressed:()async {
+                          DateTime date=await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2020),
+                              lastDate: DateTime(2021));
                           setState(() {
-                            // overwrite hours/minutes with new values, keep date the same
-                            _eventDate = DateTime(
-                              _eventDate.year,
-                              _eventDate.month,
-                              _eventDate.day,
-                              value.hour,
-                              value.minute,
-                            );
-                            timeoftodo=_toTimeString(_eventDate);
+                            dateoftodo=toDateString(date);
 
                           });
-                        });
-                      },)
-                  ],
-                ),
+                        },),
+                      FlatButton(
+                        child:Text(timeoftodo),
+                        onPressed:()async {
+                          TimeOfDay time=await showTimePicker(
+                              context: context,
+                              initialTime:TimeOfDay(hour:rightNow.hour,minute:rightNow.minute))
+                              .then((value) {
+                            setState(() {
+                              // overwrite hours/minutes with new values, keep date the same
+                              _eventDate = DateTime(
+                                _eventDate.year,
+                                _eventDate.month,
+                                _eventDate.day,
+                                value.hour,
+                                value.minute,
+                              );
+                              timeoftodo=toTimeString(_eventDate);
+
+                            });
+                          });
+                        },)
+                    ],
+                  ),
 
                 TextField(
                   controller: _controller,
@@ -140,26 +137,16 @@ class _addtodoState extends State<addtodo> {
                   ),
                 ),
 
-                TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: "Assignedto",),
-                  controller: _controller2,
-                  onTap: ()async{
-                    await _customDialog(context);
 
-
-                  },
-                  onSaved: (String value) {
-                    assignedto = value;
-                    print("Saving value $value");
-                  },),
                 RaisedButton(
                   onPressed:() async{
 
                     _formKey.currentState.save();
 
                     todo newtodo=todo(description,priority,dateoftodo,timeoftodo,assignedto);
-                    _addtodo(newtodo);
+
+                    addtodo(newtodo);
+
                     SnackBar sbforaddingtodo=new SnackBar(content: Text("Todo has been added"));
                     Scaffold.of(context).showSnackBar(sbforaddingtodo);
                     //List todos= await _todomodel.getAlltodos();
@@ -177,7 +164,8 @@ class _addtodoState extends State<addtodo> {
       ),
     );
   }
-  Future<void> _addtodo(todo Todo) async {
+
+  Future<void> addtodo(todo Todo) async {
 
     int lastinsertedid = await _todomodel.inserttodo(Todo);
     print(lastinsertedid);
@@ -185,78 +173,10 @@ class _addtodoState extends State<addtodo> {
   }
 
 
- Future<void> _customDialog(BuildContext context) {
-   String name;
-    return showDialog<void>(
-        context: context,
-        barrierDismissible: true,
-        builder:(BuildContext context){
-        return SingleChildScrollView(
-          child: AlertDialog(
-            title:Text("enter his email"),
-            content: Column(
-              children: [
-                TextField(
-               decoration:InputDecoration(labelText: "Name",hintText: "Mark Green"),
-               onChanged:(value){
-                assignedto=value;
-                name=value;
-               }
-               ),
-
-                TextField(
-                    decoration:InputDecoration(labelText: "email",hintText: "example@gmail.com"),
-                        onChanged:(value){
-                      emailaddress=value;
-                    }
-                  ),
-                TextField(
-                    decoration:InputDecoration(labelText: "message",hintText: "This Task is essential for today's dinner"),
-                    onChanged:(value){
-                      message=value;
-                    }
-                ),
-              ],
-            ),
-
-            actions:[RaisedButton(
-              child:Text("Done"),
-              onPressed: () {
-                send();
-                Navigator.of(context).pop(name);
-                _controller2.text=name;
-              },
-            )]
-
-
-
-          ),
-        );
-        }
-    );}
-  Future<void> send() async {
-    final Email email = Email(
-      body: 'Description: $description \n Due date: $dateoftodo \n Due time: $timeoftodo \n priority: $priority  Message: $message',
-      subject: 'Task for you',
-      recipients: ['$emailaddress'],
-      isHTML: true,
-    );
-
-    String platformResponse;
-    try {
-      await FlutterEmailSender.send(email);
-      platformResponse = 'success';
-      print(platformResponse);
-    } catch (error) {
-      platformResponse = error.toString();
-      print(platformResponse);
-    }
-  }
-
 
 
 }
-String _toTimeString(DateTime date) {
+String toTimeString(DateTime date) {
   return '${_twoDigits(date.hour)}:${_twoDigits(date.minute)}';
 }
 String _twoDigits(int value) {

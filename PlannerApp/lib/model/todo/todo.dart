@@ -28,7 +28,7 @@ class todo{
     };
   }
   toString(){
-    return '$description $priority $date $time $assignedto';
+    return '$id $description $priority $date $time $assignedto';
   }
 
 }

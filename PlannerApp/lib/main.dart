@@ -1,6 +1,8 @@
 import 'package:PlannerApp/model/todo/addtodopage.dart';
 import 'package:PlannerApp/model/todo/assignedtable.dart';
+import 'package:PlannerApp/model/todo/assignedtodopage.dart';
 import 'package:flutter/material.dart';
+import 'model/todo/edittodopage.dart';
 import 'utilities.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import "model/event/form_event.dart";
@@ -30,9 +32,10 @@ class MyApp extends StatelessWidget {
           '/utilities': (BuildContext context) =>
               todolistpage(title: "My Todo list"),
           '/addtodopage': (BuildContext context) => addtodo(title: "Add todo"),
-
           '/form-event': (BuildContext context) => CalendarEvents(title: "calendar events"),
-          '/assignedtable': (BuildContext context) => assigneddatatable(title: "Assigned task list")
+          '/assignedtable': (BuildContext context) => assigneddatatable(title: "Assigned task list"),
+          '/assignedtodopage': (BuildContext context) => assignedadd(),
+          '/edittodopage': (BuildContext context) => edittodo(title: "Edit todo",id:0),
         });
   }
 }

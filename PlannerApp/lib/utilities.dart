@@ -1,7 +1,9 @@
 import 'package:PlannerApp/model/todo/todo.dart';
 import 'package:PlannerApp/model/todo/todomodel.dart';
 import 'package:flutter/material.dart';
+
 import 'main.dart';
+import 'model/todo/edittodopage.dart';
 
 class todolistpage extends StatefulWidget {
   String title;
@@ -15,6 +17,8 @@ class todolistpage extends StatefulWidget {
 class _todolistpageState extends State<todolistpage> {
 
   List<String> drawerItems=["All Tasks","Today","Tomorrow","Assigned task","Old tasks"];
+  List<String> items=["Assign task to some one","Add task for you"];
+  int _SelectedIndex=0;
   final _todomodel=new todomodel();
   @override
   Widget build(BuildContext context) {
@@ -27,14 +31,31 @@ class _todolistpageState extends State<todolistpage> {
            // _gotoeditpage();
             Navigator.of(context).pop();
           },
-        ),IconButton(
-          icon:Icon(Icons.add),
-          onPressed:(){
-            _gotoaddpage();
+        ),
 
+            PopupMenuButton<String>(
+              icon: const Icon(Icons.add),
+              onSelected: (String value) {
+              if(value=="Assign task to some one") _gotoassignedpage();
+              if(value=="Add task for you")_gotoaddpage();
+              },
+              itemBuilder: (BuildContext context) {
+                return items
+                    .map<PopupMenuItem<String>>((String value) {
+                  return new PopupMenuItem(
+                      child: new Text(value), value: value);
+                }).toList();
+              },
+            ),
 
-          }
-        )]
+          IconButton(
+            icon:Icon(Icons.edit),
+            onPressed: (){
+               _gotoeditpage(context,_SelectedIndex);
+               gettodolist();
+            },
+          ),
+        ]
     ),
       body:_createlistview(context),
       drawer: Drawer(
@@ -87,6 +108,7 @@ class _todolistpageState extends State<todolistpage> {
                   trailing: Icon(Icons.arrow_forward),
               onTap: () {
                     _gotoassignedlistpage();
+                    gettodolist();
               },
              ),
                 ListTile(
@@ -100,10 +122,36 @@ class _todolistpageState extends State<todolistpage> {
         ),
       ) ,]
       )
-    )
+    ),
+        floatingActionButton: FloatingActionButton(
+        child: IconButton(
+          icon:Icon(Icons.delete_forever),
+          tooltip: "If the task's duedate is 4 days old then you will find them in \"Old tasks\".If you use this Delete option it will delete for ever",
+          onPressed: ()async{
+            await _todomodel.deletetodo(_SelectedIndex);
+            gettodolist();
+          },
+        ),
+    ),
 
 
     );
+
+  }
+  void _gotoeditpage(BuildContext context,int id) async{
+
+    var gradepage=await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => edittodo(title:"Edit todo",id: id),
+        ));
+    setState(() {
+      _todos=gradepage;
+    });
+    gettodolist();
+  }
+  Future<void> _gotoassignedpage() async{
+    var todopage=await Navigator.pushNamed(context, '/assignedtodopage');
 
   }
   List<todo> _todos=[];
@@ -112,7 +160,7 @@ class _todolistpageState extends State<todolistpage> {
     gettodolist();
 
   }
-  int _SelectedIndex=0;
+
   Future<void> _gotoaddpage() async{
     var todopage=await Navigator.pushNamed(context, '/addtodopage');
 
@@ -120,7 +168,7 @@ class _todolistpageState extends State<todolistpage> {
 
   }
   Future<void> getOldtodos()async{
-    List<todo> alltodos=await _todomodel.deleteoldtodos();
+    List<todo> alltodos=await _todomodel.getoldtodos();
     setState(() {
       _todos=alltodos;
     });
@@ -128,6 +176,7 @@ class _todolistpageState extends State<todolistpage> {
   }
 
   Future<void> gettodolist()async{
+    List<todo> oldtodos=await _todomodel.deleteoldtodos();
     List<todo> alltodos=await _todomodel.getAlltodos();
     setState(() {
       _todos=alltodos;
@@ -173,26 +222,31 @@ class _todolistpageState extends State<todolistpage> {
                 setState(() {
                   selected=List.generate(100, (index) => false);
                   selected[index]=!selected[index];
-                  _SelectedIndex=index;
+                  _SelectedIndex=_todos[index].id;
+                  print("selected index $_SelectedIndex");
+                  print(_todos[index]);
 
                 });
               },
               child: Container(
+
                   decoration: BoxDecoration(
+                    color: selected[index]==true? Colors.blue :Colors.white,
                       border: Border(
                         left: BorderSide( //                   <--- left side
                           color: whichColor(_todos[index].priority),
                           width:6.0,
                         ),
-                  )),
-                  child: ListTile(
+                  ),),
 
+                  child: ListTile(
                     title: Text(_todos[index].description),
                     subtitle: Text(_todos[index].assignedto),
                     trailing: Text(_todos[index].date),
                     leading: CircleAvatar(
 
-                        child: Text(_todos[index].time))
+                        child: Text(_todos[index].time)),
+
                   )
               )
           );
