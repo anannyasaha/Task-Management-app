@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 
 class EventInfo {
-  String id;
+  DocumentReference reference;
   String name;
   String date;
   String startTime;
@@ -11,18 +10,18 @@ class EventInfo {
   String location;
   bool shouldNotify;
 
-  EventInfo({this.id,
-    @required this.name,
-    @required this.date,
-    @required this.startTime,
-    @required this.endTime,
-    @required this.description,
-    @required this.location,
-    @required this.shouldNotify,
+  EventInfo({this.reference,
+    this.name,
+    this.date,
+    this.startTime,
+    this.endTime,
+    this.description,
+    this.location,
+    this.shouldNotify,
   });
 
   //get an event from map
-  EventInfo.fromMap(Map<String, dynamic> snapshot) {
+  EventInfo.fromMap(Map<String, dynamic> snapshot, {this.reference}) {
     this.name = snapshot['name'];
     this.date = snapshot['date'];
     this.startTime = snapshot['start'];

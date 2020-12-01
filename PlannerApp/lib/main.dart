@@ -1,15 +1,12 @@
 import 'package:PlannerApp/model/todo/addtodopage.dart';
 import 'package:PlannerApp/model/todo/assignedtable.dart';
 import 'package:PlannerApp/model/todo/assignedtodopage.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
+import 'model/event/list_event.dart';
 import 'model/todo/edittodopage.dart';
-import 'utilities.dart';
-=======
 import 'helper/utilities.dart';
->>>>>>> 54b6fe68cf5804ec07038317e3d155e68ab73039
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import "model/event/form_event.dart";
 import 'package:get_it/get_it.dart';
 import 'ui/tab_page.dart';
 
@@ -25,22 +22,47 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'App Planner',
-        theme: ThemeData(
-          primarySwatch: Colors.pink,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
-        home: MainPage(title: 'Home Page'),
-        routes: <String, WidgetBuilder>{
-          '/utilities': (BuildContext context) =>
-              todolistpage(title: "My Todo list"),
-          '/addtodopage': (BuildContext context) => addtodo(title: "Add todo"),
-          '/form-event': (BuildContext context) => CalendarEvents(title: "calendar events"),
-          '/assignedtable': (BuildContext context) => assigneddatatable(title: "Assigned task list"),
-          '/assignedtodopage': (BuildContext context) => assignedadd(),
-          '/edittodopage': (BuildContext context) => edittodo(title: "Edit todo",id:0),
-        });
+    return FutureBuilder(
+      future: Firebase.initializeApp(),
+      builder: (context, snapshot) {
+        //handle connection error
+        if (snapshot.hasError) {
+          print("Error initializing database");
+          return Text("Error initializing database");
+        }
+
+        //handle connection success
+        if (snapshot.connectionState == ConnectionState.done) {
+          return MaterialApp(
+            title: 'App Planner',
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              brightness: Brightness.light,
+              primarySwatch: Colors.blue,
+              visualDensity: VisualDensity.adaptivePlatformDensity,
+            ),
+            darkTheme: ThemeData(
+              brightness: Brightness.dark,
+              primarySwatch: Colors.blue,
+              visualDensity: VisualDensity.adaptivePlatformDensity,
+            ),
+            themeMode: ThemeMode.system,
+            home: MainPage(title: 'Home Page'),
+            routes: <String, WidgetBuilder>{
+              '/utilities': (BuildContext context) =>
+                  todolistpage(title: "My Todo list"),
+              '/addtodopage': (BuildContext context) => addtodo(title: "Add todo"),
+              '/form-event': (BuildContext context) => CalendarEvents(title: "calendar events"),
+              '/assignedtable': (BuildContext context) => assigneddatatable(title: "Assigned task list"),
+              '/assignedtodopage': (BuildContext context) => assignedadd(),
+              '/edittodopage': (BuildContext context) => edittodo(title: "Edit todo",id:0),
+            }
+          );
+        } else {
+          return CircularProgressIndicator();
+        }
+      },
+    );
   }
 }
 
