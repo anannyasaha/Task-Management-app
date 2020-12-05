@@ -78,7 +78,7 @@ class _MainPageState extends State<MainPage> {
   FlutterLocalNotificationsPlugin flutterNotif;
   String _selectedParam;
   String task;
-  String val;
+  int val;
 
   @override
   void initState() {
