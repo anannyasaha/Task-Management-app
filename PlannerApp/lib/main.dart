@@ -11,7 +11,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_it/get_it.dart';
 import 'ui/tab_page.dart';
 
-GetIt  locator = GetIt();
+GetIt locator = GetIt();
 
 void setupLocator() => locator.registerSingleton(CallsAndMessagesService());
 void main() {
@@ -34,29 +34,31 @@ class MyApp extends StatelessWidget {
         //handle connection success
         if (snapshot.connectionState == ConnectionState.done) {
           return MaterialApp(
-            title: 'App Planner',
-            debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              brightness: Brightness.light,
-              primarySwatch: Colors.blue,
-              visualDensity: VisualDensity.adaptivePlatformDensity,
-            ),
-            darkTheme: ThemeData(
-              brightness: Brightness.dark,
-              primarySwatch: Colors.blue,
-              visualDensity: VisualDensity.adaptivePlatformDensity,
-            ),
-            themeMode: ThemeMode.system,
-            home: MainPage(title: 'Home Page'),
-
-            routes: <String, WidgetBuilder>{
-              '/utilities': (BuildContext context) => todolistpage(title: "My Todo list"),
-              '/addtodopage': (BuildContext context) => addtodo(title: "Add todo"),
-              '/assignedtable': (BuildContext context) => assigneddatatable(title: "Assigned task list"),
-              '/assignedtodopage': (BuildContext context) => assignedadd(),
-              '/edittodopage': (BuildContext context) => edittodo(title: "Edit todo",id:0),
-            }
-          );
+              title: 'App Planner',
+              debugShowCheckedModeBanner: false,
+              theme: ThemeData(
+                brightness: Brightness.light,
+                primarySwatch: Colors.blue,
+                visualDensity: VisualDensity.adaptivePlatformDensity,
+              ),
+              darkTheme: ThemeData(
+                brightness: Brightness.dark,
+                primarySwatch: Colors.blue,
+                visualDensity: VisualDensity.adaptivePlatformDensity,
+              ),
+              themeMode: ThemeMode.system,
+              home: MainPage(title: 'Home Page'),
+              routes: <String, WidgetBuilder>{
+                '/utilities': (BuildContext context) =>
+                    todolistpage(title: "My Todo list"),
+                '/addtodopage': (BuildContext context) =>
+                    addtodo(title: "Add todo"),
+                '/assignedtable': (BuildContext context) =>
+                    assigneddatatable(title: "Assigned task list"),
+                '/assignedtodopage': (BuildContext context) => assignedadd(),
+                '/edittodopage': (BuildContext context) =>
+                    edittodo(title: "Edit todo", id: 0),
+              });
         } else {
           return CircularProgressIndicator();
         }
@@ -189,7 +191,6 @@ class _MainPageState extends State<MainPage> {
                     });
                   },
                 ),
-
                 DropdownButton(
                   value: val,
                   items: [
@@ -224,7 +225,6 @@ class _MainPageState extends State<MainPage> {
                 ),
               ],
             ),
-
             RaisedButton(
               onPressed: _showNotification,
               child: new Text('Set Reminder With Notification'),
@@ -246,12 +246,12 @@ class _MainPageState extends State<MainPage> {
     var scheduledTime;
 
     if (_selectedParam == "Seconds") {
-      scheduledTime = DateTime.now().add(Duration(seconds: 3));
+      scheduledTime = DateTime.now().add(Duration(seconds: val));
     } else if (_selectedParam == "Minute") {
-      scheduledTime = DateTime.now().add(Duration(minutes: 1));
+      scheduledTime = DateTime.now().add(Duration(minutes: val));
     } else {
       //slected hour
-      scheduledTime = DateTime.now().add(Duration(hours: 1));
+      scheduledTime = DateTime.now().add(Duration(hours: val));
     }
 
     // var scheduledTime = DateTime.now().add(Duration(seconds: 5));
