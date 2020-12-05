@@ -6,8 +6,7 @@ import 'firestore_utils.dart';
 import 'form_event.dart';
 
 class CalendarEvents extends StatefulWidget {
-  CalendarEvents({Key key, this.title}): super(key: key);
-  final String title;
+  CalendarEvents({Key key}): super(key: key);
 
   @override
   EventsPage createState() => EventsPage();
@@ -20,13 +19,12 @@ class EventsPage extends State<CalendarEvents> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
       body: buildList(),
       floatingActionButton: new FloatingActionButton(
-          tooltip: "Add event",
+          tooltip: "Add Event",
           child: const Icon(Icons.add),
           onPressed: () {
-            print("Add event");
+            print("Add an event");
             _startForm(context);
           }
       ),
@@ -49,7 +47,7 @@ class EventsPage extends State<CalendarEvents> {
   }
 
   Widget _buildEvent(BuildContext context, DocumentSnapshot documentData) {
-    final eventInfo = EventInfo.fromMap(documentData.data(), reference: documentData.reference);
+    final eventInfo = EventInfo.fromMap(documentData.data());
 
     return Card(
       elevation: 3.0,

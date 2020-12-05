@@ -1,3 +1,4 @@
+import 'package:PlannerApp/model/event/form_event.dart';
 import 'package:PlannerApp/model/todo/addtodopage.dart';
 import 'package:PlannerApp/model/todo/assignedtable.dart';
 import 'package:PlannerApp/model/todo/assignedtodopage.dart';
@@ -12,13 +13,12 @@ import 'ui/tab_page.dart';
 
 GetIt  locator = GetIt();
 
-void setupLocator() {
-  locator.registerSingleton(CallsAndMessagesService());}
+void setupLocator() => locator.registerSingleton(CallsAndMessagesService());
 void main() {
   setupLocator();
   runApp(MyApp());
-
 }
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -48,11 +48,10 @@ class MyApp extends StatelessWidget {
             ),
             themeMode: ThemeMode.system,
             home: MainPage(title: 'Home Page'),
+
             routes: <String, WidgetBuilder>{
-              '/utilities': (BuildContext context) =>
-                  todolistpage(title: "My Todo list"),
+              '/utilities': (BuildContext context) => todolistpage(title: "My Todo list"),
               '/addtodopage': (BuildContext context) => addtodo(title: "Add todo"),
-              '/form-event': (BuildContext context) => CalendarEvents(title: "calendar events"),
               '/assignedtable': (BuildContext context) => assigneddatatable(title: "Assigned task list"),
               '/assignedtodopage': (BuildContext context) => assignedadd(),
               '/edittodopage': (BuildContext context) => edittodo(title: "Edit todo",id:0),
@@ -104,11 +103,10 @@ class _MainPageState extends State<MainPage> {
       LayoutExample(
         title: 'Events',
         icon: Icons.event,
-        builder: buildRowWidget,
+        builder: listEvents,
       ),
     ];
 
-    floatingActionButton:
     return DefaultTabController(
       length: options.length,
       child: Scaffold(
@@ -117,13 +115,6 @@ class _MainPageState extends State<MainPage> {
           bottom: buildTabBar(options),
         ),
         body: buildTabBarView(options),
-        floatingActionButton: new FloatingActionButton(
-          tooltip: "Add Event",
-          child: new Icon(Icons.add),
-          onPressed: () {
-            print("Add Event");
-          },
-        ),
         bottomNavigationBar: BottomNavigationBar(
             onTap: (int index) {
               setState(() {
@@ -144,89 +135,15 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
-  Widget buildStackWidget() {
-    return Stack(
-      alignment: const Alignment(1.0, -0.5),
-      children: <Widget>[
-        CircleAvatar(
-          radius: 100.0,
-          backgroundColor: Colors.blue,
-          child: Text(
-            'RF',
-            textScaleFactor: 4.0,
-          ),
-        ),
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.black45,
-          ),
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-            child: Text('Randy',
-                style: TextStyle(fontSize: 20, color: Colors.white)),
-          ),
-        ),
-      ],
-    );
-  }
-  Future<void> _gotoeventsPage(context) async {
-    await Navigator.pushNamed(context, '/form_event');
-  }
   Future<void> _gototodolistPage(context) async {
     await Navigator.pushNamed(context, '/utilities');
   }
 
-  Widget buildRowWidget() {
-    return Container(
-      height: 80.0,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Container(
-            width: 50.0,
-            color: Colors.red,
-          ),
-          Container(
-            width: 50.0,
-            color: Colors.blue,
-          ),
-          Container(
-            width: 50.0,
-            color: Colors.green,
-          ),
-          Container(
-            width: 50.0,
-            color: Colors.amber,
-          ),
-        ],
-      ),
-    );
+  Widget listEvents() {
+    return CalendarEvents();
   }
 
   Widget buildColumnWidget() {
-    // return Column(
-    //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    //   crossAxisAlignment: CrossAxisAlignment.center,
-    //   children: <Widget>[
-    //     FlutterLogo(
-    //       size: 40.0,
-    //       textColor: Colors.red,
-    //     ),
-    //     FlutterLogo(
-    //       size: 40.0,
-    //       textColor: Colors.blue,
-    //     ),
-    //     FlutterLogo(
-    //       size: 40.0,
-    //       textColor: Colors.green,
-    //     ),
-    //     FlutterLogo(
-    //       size: 40.0,
-    //       textColor: Colors.amber,
-    //     ),
-    //   ],
-    // );
     return Scaffold(
       body: Center(
         child: Column(
@@ -272,14 +189,7 @@ class _MainPageState extends State<MainPage> {
                     });
                   },
                 ),
-                // TextField(
-                //   controller:  = _val,
-                //   decoration: InputDecoration(
-                //   border: OutlineInputBorder(),
-                //   labelText: "Time Value: ",
-                //   ),
-                //   keyboardType: TextInputType.number,
-                // ),
+
                 DropdownButton(
                   value: val,
                   items: [
@@ -314,6 +224,7 @@ class _MainPageState extends State<MainPage> {
                 ),
               ],
             ),
+
             RaisedButton(
               onPressed: _showNotification,
               child: new Text('Set Reminder With Notification'),
@@ -331,10 +242,6 @@ class _MainPageState extends State<MainPage> {
     var IOSDetails = new IOSNotificationDetails();
     var generalNotificationDetails =
         new NotificationDetails(androidDetails, IOSDetails);
-
-    // await flutterNotif.show(
-    //     0, "Notification", "Test notification", generalNotificationDetails,
-    //     payload: "Notification");
 
     var scheduledTime;
 

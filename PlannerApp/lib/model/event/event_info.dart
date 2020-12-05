@@ -21,7 +21,7 @@ class EventInfo {
   });
 
   //get an event from map
-  EventInfo.fromMap(Map<String, dynamic> snapshot, {this.reference}) {
+  EventInfo.fromMap(Map<String, dynamic> snapshot) {
     this.name = snapshot['name'];
     this.date = snapshot['date'];
     this.startTime = snapshot['start'];
