@@ -148,13 +148,15 @@ class _MainPageState extends State<MainPage> {
   Widget buildColumnWidget() {
     return Scaffold(
       body: Center(
+        child: Sized
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
               padding: const EdgeInsets.all(15.0),
               child: TextField(
-                decoration: InputDecoration(border: OutlineInputBorder()),
+                decoration: InputDecoration(
+                    hintText: "Reminder title: ", border: OutlineInputBorder()),
                 onChanged: (_val) {
                   task = _val;
                 },
@@ -210,6 +212,222 @@ class _MainPageState extends State<MainPage> {
                       child: Text("4"),
                       value: 4,
                     ),
+                    DropdownMenuItem(
+                      child: Text("5"),
+                      value: 5,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("6"),
+                      value: 6,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("7"),
+                      value: 7,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("8"),
+                      value: 8,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("9"),
+                      value: 9,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("10"),
+                      value: 10,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("11"),
+                      value: 11,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("12"),
+                      value: 12,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("13"),
+                      value: 13,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("14"),
+                      value: 14,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("15"),
+                      value: 15,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("16"),
+                      value: 16,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("17"),
+                      value: 17,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("18"),
+                      value: 18,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("19"),
+                      value: 19,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("20"),
+                      value: 20,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("21"),
+                      value: 21,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("22"),
+                      value: 22,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("23"),
+                      value: 23,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("24"),
+                      value: 24,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("25"),
+                      value: 25,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("26"),
+                      value: 26,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("27"),
+                      value: 27,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("28"),
+                      value: 28,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("29"),
+                      value: 29,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("30"),
+                      value: 30,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("31"),
+                      value: 31,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("32"),
+                      value: 32,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("33"),
+                      value: 33,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("34"),
+                      value: 34,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("35"),
+                      value: 35,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("36"),
+                      value: 36,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("37"),
+                      value: 37,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("39"),
+                      value: 39,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("40"),
+                      value: 40,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("41"),
+                      value: 41,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("42"),
+                      value: 42,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("43"),
+                      value: 43,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("44"),
+                      value: 44,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("45"),
+                      value: 45,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("46"),
+                      value: 46,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("47"),
+                      value: 47,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("48"),
+                      value: 48,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("49"),
+                      value: 49,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("50"),
+                      value: 50,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("51"),
+                      value: 51,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("52"),
+                      value: 52,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("53"),
+                      value: 53,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("54"),
+                      value: 54,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("55"),
+                      value: 55,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("56"),
+                      value: 56,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("57"),
+                      value: 57,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("58"),
+                      value: 58,
+                    ),
+                    DropdownMenuItem(
+                      child: Text("59"),
+                      value: 59,
+                    ),
                   ],
                   hint: Text(
                     "Select Value",
@@ -257,7 +475,7 @@ class _MainPageState extends State<MainPage> {
     // var scheduledTime = DateTime.now().add(Duration(seconds: 5));
 
     flutterNotif.schedule(
-        1, "Time Reached", task, scheduledTime, generalNotificationDetails);
+        1, "Time Reached ", task, scheduledTime, generalNotificationDetails);
   }
 
   Future notificationSelected(String payload) async {
