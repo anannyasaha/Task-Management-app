@@ -10,6 +10,7 @@ import 'helper/utilities.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_it/get_it.dart';
 import 'ui/tab_page.dart';
+import 'package:PlannerApp/model/alarm.dart';
 
 GetIt locator = GetIt();
 
@@ -58,6 +59,7 @@ class MyApp extends StatelessWidget {
                 '/assignedtodopage': (BuildContext context) => assignedadd(),
                 '/edittodopage': (BuildContext context) =>
                     edittodo(title: "Edit todo", id: 0),
+                '/alarm': (BuildContext context) => alarm(),
               });
         } else {
           return CircularProgressIndicator();
@@ -122,6 +124,8 @@ class _MainPageState extends State<MainPage> {
               setState(() {
                 if (index == 0) {
                   _gototodolistPage(context);
+                } else if (index == 1) {
+                  _gotoalarmPage(context);
                 }
               });
             },
@@ -139,6 +143,10 @@ class _MainPageState extends State<MainPage> {
 
   Future<void> _gototodolistPage(context) async {
     await Navigator.pushNamed(context, '/utilities');
+  }
+
+  Future<void> _gotoalarmPage(context) async {
+    await Navigator.pushNamed(context, '/alarm');
   }
 
   Widget listEvents() {
