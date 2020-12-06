@@ -148,7 +148,6 @@ class _MainPageState extends State<MainPage> {
   Widget buildColumnWidget() {
     return Scaffold(
       body: Center(
-        child: Sized
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
