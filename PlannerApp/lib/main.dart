@@ -1,13 +1,12 @@
+import 'package:PlannerApp/model/Speech/EditSpeech.dart';
 import 'package:PlannerApp/model/todo/addtodopage.dart';
 import 'package:PlannerApp/model/todo/assignedtable.dart';
 import 'package:PlannerApp/model/todo/assignedtodopage.dart';
+import 'package:PlannerApp/model/Speech/SpeechToText.dart';
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
 import 'model/todo/edittodopage.dart';
-import 'utilities.dart';
-=======
-import 'helper/utilities.dart';
->>>>>>> 54b6fe68cf5804ec07038317e3d155e68ab73039
+import 'model/todo/utilities.dart';
+
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import "model/event/form_event.dart";
 import 'package:get_it/get_it.dart';
@@ -38,8 +37,10 @@ class MyApp extends StatelessWidget {
           '/addtodopage': (BuildContext context) => addtodo(title: "Add todo"),
           '/form-event': (BuildContext context) => CalendarEvents(title: "calendar events"),
           '/assignedtable': (BuildContext context) => assigneddatatable(title: "Assigned task list"),
+          '/SpeechToText': (BuildContext context) => SpeechText(title: "Speech to Text"),
           '/assignedtodopage': (BuildContext context) => assignedadd(),
           '/edittodopage': (BuildContext context) => edittodo(title: "Edit todo",id:0),
+          '/EditSpeech': (BuildContext context) => edit_speech(texttoedit: " "),
         });
   }
 }
@@ -108,15 +109,18 @@ class _MainPageState extends State<MainPage> {
                 if (index == 0) {
                   _gototodolistPage(context);
                 }
+                if(index==1){
+                  _gotospeechtextPage(context);
+                }
               });
             },
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Icon(Icons.list),
-                title: Text("Todo list"),
+                title: Text("Task manager"),
               ),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.alarm), title: Text("Alarm"))
+                  icon: Icon(Icons.record_voice_over), title: Text("Speech to text"))
             ]),
       ),
     );
@@ -152,6 +156,9 @@ class _MainPageState extends State<MainPage> {
   }
   Future<void> _gototodolistPage(context) async {
     await Navigator.pushNamed(context, '/utilities');
+  }
+  Future<void> _gotospeechtextPage(context) async {
+    await Navigator.pushNamed(context, '/SpeechToText');
   }
 
   Widget buildRowWidget() {

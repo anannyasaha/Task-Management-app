@@ -1,12 +1,14 @@
+import 'dart:async';
+import 'dart:async';
+
 import 'package:PlannerApp/model/todo/todo.dart';
 import 'package:PlannerApp/model/todo/todomodel.dart';
 import 'package:flutter/material.dart';
-<<<<<<< HEAD:PlannerApp/lib/utilities.dart
 
-import 'main.dart';
-import 'model/todo/edittodopage.dart';
-=======
->>>>>>> 54b6fe68cf5804ec07038317e3d155e68ab73039:PlannerApp/lib/helper/utilities.dart
+
+import '../../main.dart';
+import 'edittodopage.dart';
+
 
 class todolistpage extends StatefulWidget {
   String title;
@@ -18,26 +20,20 @@ class todolistpage extends StatefulWidget {
 }
 
 class _todolistpageState extends State<todolistpage> {
-<<<<<<< HEAD:PlannerApp/lib/utilities.dart
+
 
   List<String> drawerItems=["All Tasks","Today","Tomorrow","Assigned task","Old tasks"];
   List<String> items=["Assign task to some one","Add task for you"];
   int _SelectedIndex=0;
-=======
-  List<String> drawerItems=["All Tasks","Today","Tomorrow","This week","Assigned task"];
->>>>>>> 54b6fe68cf5804ec07038317e3d155e68ab73039:PlannerApp/lib/helper/utilities.dart
+
+
   final _todomodel=new todomodel();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:AppBar(
           title:Text(widget.title) ,
-        actions:[IconButton(
-          icon:Icon(Icons.edit),
-          onPressed: (){
-           // _gotoeditpage();
-          },
-        ),
+        actions:[
 
             PopupMenuButton<String>(
               icon: const Icon(Icons.add),
@@ -93,35 +89,54 @@ class _todolistpageState extends State<todolistpage> {
 
                  ),
                onTap: () {
-                 Navigator.of(context).pop();
+                 gettodolist();
                },
                ),
                ListTile(
                 title: Text(drawerItems[1]),
                  trailing: Icon(Icons.add),
-                onTap: () {
-               Navigator.of(context).pop();
+                onTap: () async {
+               List<todo> alltodos=await _todomodel.gettoomorrowtodos();
+               setState(() {
+                 _todos=alltodos;
+               });
                 },
               ),
                ListTile(
                  title: Text(drawerItems[2]),
                 trailing: Icon(Icons.add),
-              onTap: () {
-               Navigator.of(context).pop();
+              onTap: () async {
+                List<todo> alltodos=await _todomodel.gettodaytodos();
+                setState(() {
+                  _todos=alltodos;
+                });
+
                 },
-              ),
+               ),
                 ListTile(
                   title: Text(drawerItems[3]),
                   trailing: Icon(Icons.add),
               onTap: () {
-<<<<<<< HEAD:PlannerApp/lib/utilities.dart
+
                     _gotoassignedlistpage();
                     gettodolist();
-=======
-                    Navigator.of(context).pop();
->>>>>>> 54b6fe68cf5804ec07038317e3d155e68ab73039:PlannerApp/lib/helper/utilities.dart
+
+
+
               },
              ),
+                ListTile(
+                  title: Text(drawerItems[4]),
+                  trailing: Icon(Icons.add),
+                  onTap: () {
+
+                    getOldtodos();
+
+
+                    Navigator.of(context).pop();
+
+                  },
+                ),
               ],
         ),
       ) ,]
@@ -159,23 +174,22 @@ class _todolistpageState extends State<todolistpage> {
 
   }
   List<todo> _todos=[];
-<<<<<<< HEAD:PlannerApp/lib/utilities.dart
+
   Future<void> _gotoassignedlistpage() async{
     var todopage=await Navigator.pushNamed(context, '/assignedtable');
     gettodolist();
 
   }
 
-=======
-  int _SelectedIndex=0;
->>>>>>> 54b6fe68cf5804ec07038317e3d155e68ab73039:PlannerApp/lib/helper/utilities.dart
+
+
   Future<void> _gotoaddpage() async{
     var todopage=await Navigator.pushNamed(context, '/addtodopage');
 
     gettodolist();
 
   }
-<<<<<<< HEAD:PlannerApp/lib/utilities.dart
+
   Future<void> getOldtodos()async{
     List<todo> alltodos=await _todomodel.getoldtodos();
     setState(() {
@@ -184,8 +198,7 @@ class _todolistpageState extends State<todolistpage> {
 
   }
 
-=======
->>>>>>> 54b6fe68cf5804ec07038317e3d155e68ab73039:PlannerApp/lib/helper/utilities.dart
+
   Future<void> gettodolist()async{
     List<todo> oldtodos=await _todomodel.deleteoldtodos();
     List<todo> alltodos=await _todomodel.getAlltodos();
@@ -233,13 +246,12 @@ class _todolistpageState extends State<todolistpage> {
                     title: Text(_todos[index].description),
                     subtitle: Text(_todos[index].time),
                     trailing: Text(_todos[index].date),
-<<<<<<< HEAD:PlannerApp/lib/utilities.dart
+
                     leading: CircleAvatar(
 
                         child: Text(_todos[index].time)),
 
-=======
->>>>>>> 54b6fe68cf5804ec07038317e3d155e68ab73039:PlannerApp/lib/helper/utilities.dart
+
                   )
               )
           );
