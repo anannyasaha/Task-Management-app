@@ -1,3 +1,4 @@
+
 import 'dart:async';
 import 'dart:async';
 
@@ -8,6 +9,12 @@ import 'package:flutter/material.dart';
 
 import '../../main.dart';
 import 'edittodopage.dart';
+
+
+import 'package:PlannerApp/model/todo/edittodopage.dart';
+import 'package:PlannerApp/model/todo/todo.dart';
+import 'package:PlannerApp/model/todo/todomodel.dart';
+import 'package:flutter/material.dart';
 
 
 class todolistpage extends StatefulWidget {
@@ -90,27 +97,29 @@ class _todolistpageState extends State<todolistpage> {
                  ),
                onTap: () {
                  gettodolist();
+                 Navigator.of(context).pop();
                },
                ),
                ListTile(
                 title: Text(drawerItems[1]),
                  trailing: Icon(Icons.add),
                 onTap: () async {
-               List<todo> alltodos=await _todomodel.gettoomorrowtodos();
+               List<todo> alltodos=await _todomodel.gettodaytodos();
                setState(() {
                  _todos=alltodos;
                });
+               Navigator.of(context).pop();
                 },
               ),
                ListTile(
                  title: Text(drawerItems[2]),
                 trailing: Icon(Icons.add),
               onTap: () async {
-                List<todo> alltodos=await _todomodel.gettodaytodos();
+                List<todo> alltodos=await _todomodel.gettoomorrowtodos();
                 setState(() {
                   _todos=alltodos;
                 });
-
+                Navigator.of(context).pop();
                 },
                ),
                 ListTile(
@@ -118,10 +127,14 @@ class _todolistpageState extends State<todolistpage> {
                   trailing: Icon(Icons.add),
               onTap: () {
 
+
                     _gotoassignedlistpage();
                     gettodolist();
 
 
+                    _gotoassignedlistpage();
+                    gettodolist();
+                    Navigator.of(context).pop();
 
               },
              ),
@@ -129,10 +142,7 @@ class _todolistpageState extends State<todolistpage> {
                   title: Text(drawerItems[4]),
                   trailing: Icon(Icons.add),
                   onTap: () {
-
                     getOldtodos();
-
-
                     Navigator.of(context).pop();
 
                   },
@@ -169,6 +179,7 @@ class _todolistpageState extends State<todolistpage> {
     });
     gettodolist();
   }
+
   Future<void> _gotoassignedpage() async{
     var todopage=await Navigator.pushNamed(context, '/assignedtodopage');
 
@@ -180,6 +191,8 @@ class _todolistpageState extends State<todolistpage> {
     gettodolist();
 
   }
+
+
 
 
 
@@ -205,6 +218,7 @@ class _todolistpageState extends State<todolistpage> {
     setState(() {
       _todos=alltodos;
     });
+
 
   }
   @override
@@ -237,8 +251,8 @@ class _todolistpageState extends State<todolistpage> {
                     color: selected[index]==true? Colors.blue :Colors.white,
                       border: Border(
                         left: BorderSide( //                   <--- left side
-                          color: Colors.black,
-                          width: 2.0,
+                          color:whatPriority(_todos[index].priority),
+                          width: 5.0,
                         ),
                   ),),
 
@@ -247,16 +261,23 @@ class _todolistpageState extends State<todolistpage> {
                     subtitle: Text(_todos[index].time),
                     trailing: Text(_todos[index].date),
 
+
                     leading: CircleAvatar(
-
                         child: Text(_todos[index].time)),
-
 
                   )
               )
           );
         }
     );
+  }
+  Color whatPriority(String priority){
+    if(priority=="High")
+      return Colors.red;
+    else if(priority=="Moderate")
+      return Colors.yellow;
+    else
+      return Colors.green;
   }
 
 }

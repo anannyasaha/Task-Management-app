@@ -1,47 +1,46 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:PlannerApp/model/event/event_info.dart';
-import 'package:flutter/material.dart';
 
-//initialize Firebase
-final String collectionPath = "events";
-final String collectionDoc = "calendar";
-final CollectionReference mainCollection = FirebaseFirestore.instance.collection(collectionPath);
-final DocumentReference reference = mainCollection.doc(collectionDoc);
+import 'event_info.dart';
 
-class FirestoreUtils {
-  //add event to Firestore
-  Future<void> storeEventData(EventInfo eventInfo) async {
-    DocumentReference documentReferencer = reference.collection(collectionPath).doc(eventInfo.id);
-    Map<String, dynamic> events = eventInfo.toJson();
-    print('Get events:\n$events');
+class EventModel {
+  final db = FirebaseFirestore.instance;
+  final String collectionPath = "events";
 
-    await documentReferencer.set(events).whenComplete(() {
-      print("Event added to the database, id: {${eventInfo.id}}");
-    }).catchError((e) => print(e));
-  }
-
-  //update event in Firestore
-  Future<void> updateEventData(EventInfo eventInfo) async {
-    DocumentReference ref = reference.collection(collectionPath).doc(eventInfo.id);
-    Map<String, dynamic> data = eventInfo.toJson();
-    print('Get events:\n$data');
-
-    await ref.update(data).whenComplete(() {
-      print("Event updated in the database, id: {${eventInfo.id}}");
-    }).catchError((e) => print(e));
-  }
-
-  //delete event from Firestore
-  Future<void> deleteEvent({@required String id}) async {
-    DocumentReference ref = reference.collection(collectionPath).doc(id);
-    print('Event deleted, id: $id');
-
-    await ref.delete().catchError((e) => print(e));
-  }
-
-  //get events from Firestore
+  //get events from firestore
   Stream<QuerySnapshot> retrieveEvents() {
-    Stream<QuerySnapshot> eventStream = reference.collection(collectionPath).orderBy('date').snapshots();
-    return eventStream;
+    return db.collection(collectionPath).snapshots();
+  }
+
+  //get specific events by reference ID
+  EventInfo retrievebyID(String path) {
+    EventInfo getEvent;
+    db.collection(collectionPath).doc(path).get().then((info) {
+      getEvent = EventInfo.fromMap(info.data());
+    });
+
+    return getEvent;
+  }
+
+  //add event
+  void storeEventData(EventInfo event) {
+    db.collection(collectionPath).add(event.toJson());
+  }
+
+  //update event
+  void updateEventData(EventInfo event, String document) {
+    try {
+      db.collection(collectionPath).doc(document).update(event.toJson());
+    } catch (e) {
+      e.toString();
+    }
+  }
+
+  //delete event
+  void deleteEvent(String path) {
+    try {
+      db.collection(collectionPath).doc(path).delete();
+    } catch (e) {
+      e.toString();
+    }
   }
 }
