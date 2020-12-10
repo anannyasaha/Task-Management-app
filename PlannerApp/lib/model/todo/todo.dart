@@ -24,7 +24,6 @@ class todo{
       'date':this.date,
       'time':this.time,
       'assignedto':this.assignedto,
-
     };
   }
   toString(){

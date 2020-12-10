@@ -218,8 +218,6 @@ class _todolistpageState extends State<todolistpage> {
     setState(() {
       _todos=alltodos;
     });
-
-
   }
   @override
   void initState() {

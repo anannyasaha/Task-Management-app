@@ -5,6 +5,7 @@ import 'package:PlannerApp/model/todo/assignedtable.dart';
 import 'package:PlannerApp/model/todo/assignedtodopage.dart';
 import 'package:PlannerApp/model/Speech/SpeechToText.dart';
 import 'package:flutter/material.dart';
+import 'model/Speech/speechgridview.dart';
 import 'model/todo/edittodopage.dart';
 import 'model/todo/utilities.dart';
 import 'package:PlannerApp/model/event/form_event.dart';
@@ -68,6 +69,7 @@ class MyApp extends StatelessWidget {
                 '/edittodopage': (BuildContext context) =>
                     edittodo(title: "Edit todo", id: 0),
                 '/EditSpeech': (BuildContext context) => edit_speech(texttoedit: " "),
+                '/speechgridview': (BuildContext context) => speechlist(),
                 '/alarm': (BuildContext context) => alarm(),
               });
         } else {
