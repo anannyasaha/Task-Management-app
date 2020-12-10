@@ -55,16 +55,16 @@ class MyApp extends StatelessWidget {
               home: MainPage(title: 'Home Page'),
               routes: <String, WidgetBuilder>{
                 '/utilities': (BuildContext context) =>
-                    todolistpage(title: "My Todo list"),
+                    todolistpage(title: "Task list"),
                 '/addtodopage': (BuildContext context) =>
-                    addtodo(title: "Add todo"),
+                    addtodo(title: "Add task"),
                 '/assignedtable': (BuildContext context) =>
                     assigneddatatable(title: "Assigned task list"),
                 '/assignedtodopage': (BuildContext context) => assignedadd(),
                 '/SpeechToText': (BuildContext context) =>
                     SpeechText(title: "Speech to Text"),
                 '/edittodopage': (BuildContext context) =>
-                    edittodo(title: "Edit todo", id: 0),
+                    edittodo(title: "Edit task", id: 0),
                 '/EditSpeech': (BuildContext context) => edit_speech(texttoedit: " "),
                 '/speechgridview': (BuildContext context) => speechlist(),
                 '/mapviewpage': (BuildContext context) =>

@@ -91,10 +91,7 @@ class _todolistpageState extends State<todolistpage> {
               child: ListView(children: [
                 ListTile(
                  title: Text(drawerItems[0]),
-                 trailing: IconButton(
-                   icon:Icon(Icons.add),
-
-                 ),
+                 trailing: Icon(Icons.arrow_forward_ios),
                onTap: () {
                  gettodolist();
                  Navigator.of(context).pop();
@@ -102,7 +99,7 @@ class _todolistpageState extends State<todolistpage> {
                ),
                ListTile(
                 title: Text(drawerItems[1]),
-                 trailing: Icon(Icons.add),
+                 trailing: Icon(Icons.arrow_forward_ios),
                 onTap: () async {
                List<todo> alltodos=await _todomodel.gettodaytodos();
                setState(() {
@@ -113,7 +110,7 @@ class _todolistpageState extends State<todolistpage> {
               ),
                ListTile(
                  title: Text(drawerItems[2]),
-                trailing: Icon(Icons.add),
+                trailing: Icon(Icons.arrow_forward_ios),
               onTap: () async {
                 List<todo> alltodos=await _todomodel.gettoomorrowtodos();
                 setState(() {
@@ -124,7 +121,7 @@ class _todolistpageState extends State<todolistpage> {
                ),
                 ListTile(
                   title: Text(drawerItems[3]),
-                  trailing: Icon(Icons.add),
+                  trailing: Icon(Icons.arrow_forward_ios),
               onTap: () {
 
 
@@ -140,7 +137,7 @@ class _todolistpageState extends State<todolistpage> {
              ),
                 ListTile(
                   title: Text(drawerItems[4]),
-                  trailing: Icon(Icons.add),
+                  trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () {
                     getOldtodos();
                     Navigator.of(context).pop();
