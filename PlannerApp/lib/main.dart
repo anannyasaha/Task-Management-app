@@ -208,6 +208,7 @@ class _MainPageState extends State<MainPage> {
                       width: 100.0,
                       height: 60.0,
                       child: CupertinoPicker(
+                        magnification: 1.1,
                         itemExtent: 40,
                         onSelectedItemChanged: (int index) {
                           _selectedParam = index;
@@ -232,6 +233,7 @@ class _MainPageState extends State<MainPage> {
                       width: 100.0,
                       height: 60.0,
                       child: CupertinoPicker(
+                        magnification: 1.1,
                         itemExtent: 40,
                         onSelectedItemChanged: (int index) {
                           val = index + 1;
@@ -488,7 +490,8 @@ class _MainPageState extends State<MainPage> {
               onPressed: _showNotification,
               color: Colors.blue,
               textColor: Colors.white,
-              child: new Text('Set Timed Reminder With Notification'),
+              child: new Text('Set Timed Reminder With Notification',
+                  style: new TextStyle(fontSize: 16.0)),
             )
           ],
         ),
