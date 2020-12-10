@@ -11,7 +11,8 @@ import 'model/event/list_event.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_it/get_it.dart';
 import 'ui/tab_page.dart';
-import 'package:PlannerApp/model/alarm.dart';
+import 'model/mapwork/map_view.dart';
+import 'package:PlannerApp/model/mapwork/map_view.dart';
 import 'package:flutter/cupertino.dart';
 
 GetIt locator = GetIt();
@@ -65,7 +66,8 @@ class MyApp extends StatelessWidget {
                     edittodo(title: "Edit todo", id: 0),
                 '/EditSpeech': (BuildContext context) =>
                     edit_speech(texttoedit: " "),
-                '/alarm': (BuildContext context) => alarm(),
+                '/mapviewpage': (BuildContext context) =>
+                    MapView(title: 'Location'),
               });
         } else {
           return CircularProgressIndicator();
@@ -133,7 +135,7 @@ class _MainPageState extends State<MainPage> {
                   _gototodolistPage(context);
                 }
                 if (index == 2) {
-                  _gotoalarmPage(context);
+                  _gotomapviewPage(context);
                 }
                 if (index == 1) {
                   _gotospeechtextPage(context);
@@ -149,7 +151,7 @@ class _MainPageState extends State<MainPage> {
                   icon: Icon(Icons.record_voice_over),
                   title: Text("Speech to text")),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.alarm), title: Text("Alarm"))
+                  icon: Icon(Icons.map), title: Text("Location"))
             ]),
       ),
     );
@@ -163,8 +165,8 @@ class _MainPageState extends State<MainPage> {
     await Navigator.pushNamed(context, '/SpeechToText');
   }
 
-  Future<void> _gotoalarmPage(context) async {
-    await Navigator.pushNamed(context, '/alarm');
+  Future<void> _gotomapviewPage(context) async {
+    await Navigator.pushNamed(context, '/mapviewpage');
   }
 
   Widget listEvents() {
