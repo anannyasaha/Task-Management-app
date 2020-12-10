@@ -39,7 +39,6 @@ class FormPage extends State<CalendarForm> {
       endTime: _end.format(context),
       description: desc,
       location: loc,
-      shouldNotify: notify,
     );
 
     if (widget.refID.isEmpty) {
@@ -138,22 +137,6 @@ class FormPage extends State<CalendarForm> {
                 labelText: "Location",
               ),
             ),
-
-            //notification switch
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text("Send notifications?"), SizedBox(width: 10),
-                Switch(
-                  activeTrackColor: Theme.of(context).accentColor,
-                  activeColor: Theme.of(context).accentColor,
-                  value: notify,
-                  onChanged: (value) {
-                    setState(() => notify = value);
-                  },
-                )
-              ],
-            )
           ],
         ),
       ),

@@ -19,7 +19,7 @@ class _alarmState extends State<alarm> {
          
         },
         tooltip: 'test alarm',
-        child: Icon(Icons.lock),
+        child: Icon(Icons.alarm),
       ),
     );
   }

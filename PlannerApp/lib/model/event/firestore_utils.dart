@@ -8,7 +8,7 @@ class EventModel {
 
   //get events from firestore
   Stream<QuerySnapshot> retrieveEvents() {
-    return db.collection(collectionPath).snapshots();
+    return db.collection(collectionPath).orderBy("date", descending: true).snapshots();
   }
 
   //get specific events by reference ID

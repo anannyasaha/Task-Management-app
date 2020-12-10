@@ -1,4 +1,3 @@
-
 import 'package:PlannerApp/model/Speech/EditSpeech.dart';
 import 'package:PlannerApp/model/todo/addtodopage.dart';
 import 'package:PlannerApp/model/todo/assignedtable.dart';
@@ -7,11 +6,8 @@ import 'package:PlannerApp/model/Speech/SpeechToText.dart';
 import 'package:flutter/material.dart';
 import 'model/todo/edittodopage.dart';
 import 'model/todo/utilities.dart';
-import 'package:PlannerApp/model/event/form_event.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
 import 'model/event/list_event.dart';
-import 'model/todo/edittodopage.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_it/get_it.dart';
 import 'ui/tab_page.dart';
@@ -57,16 +53,12 @@ class MyApp extends StatelessWidget {
               themeMode: ThemeMode.system,
               home: MainPage(title: 'Home Page'),
               routes: <String, WidgetBuilder>{
-                '/utilities': (BuildContext context) =>
-                    todolistpage(title: "My Todo list"),
-                '/addtodopage': (BuildContext context) =>
-                    addtodo(title: "Add todo"),
-                '/assignedtable': (BuildContext context) =>
-                    assigneddatatable(title: "Assigned task list"),
+                '/utilities': (BuildContext context) => todolistpage(title: "My Todo list"),
+                '/addtodopage': (BuildContext context) => addtodo(title: "Add todo"),
+                '/assignedtable': (BuildContext context) => assigneddatatable(title: "Assigned task list"),
                 '/assignedtodopage': (BuildContext context) => assignedadd(),
                 '/SpeechToText': (BuildContext context) => SpeechText(title: "Speech to Text"),
-                '/edittodopage': (BuildContext context) =>
-                    edittodo(title: "Edit todo", id: 0),
+                '/edittodopage': (BuildContext context) => edittodo(title: "Edit todo", id: 0),
                 '/EditSpeech': (BuildContext context) => edit_speech(texttoedit: " "),
                 '/alarm': (BuildContext context) => alarm(),
               });

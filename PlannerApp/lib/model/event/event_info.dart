@@ -8,7 +8,6 @@ class EventInfo {
   String endTime;
   String description;
   String location;
-  bool shouldNotify;
 
   EventInfo({this.reference,
     this.name,
@@ -17,18 +16,16 @@ class EventInfo {
     this.endTime,
     this.description,
     this.location,
-    this.shouldNotify,
   });
 
   //get an event from map
-  EventInfo.fromMap(Map<String, dynamic> snapshot) {
+  EventInfo.fromMap(Map<String, dynamic> snapshot, {this.reference}) {
     this.name = snapshot['name'];
     this.date = snapshot['date'];
     this.startTime = snapshot['start'];
     this.endTime = snapshot['end'];
     this.description = snapshot['desc'];
     this.location = snapshot['loc'];
-    this.shouldNotify = snapshot['notify'];
   }
 
   //add event as JSON
@@ -40,7 +37,6 @@ class EventInfo {
       'end': endTime,
       'desc': description,
       'loc': location,
-      'notify': shouldNotify,
     };
   }
 }
