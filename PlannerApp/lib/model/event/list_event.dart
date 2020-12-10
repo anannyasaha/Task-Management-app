@@ -47,7 +47,7 @@ class EventsPage extends State<CalendarEvents> {
   }
 
   Widget _buildEvent(BuildContext context, DocumentSnapshot documentData) {
-    final eventInfo = EventInfo.fromMap(documentData.data());
+    final eventInfo = EventInfo.fromMap(documentData.data(), reference: documentData.reference);
 
     return Card(
       elevation: 3.0,

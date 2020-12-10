@@ -1,4 +1,3 @@
-
 import 'package:PlannerApp/model/Speech/EditSpeech.dart';
 import 'package:PlannerApp/model/todo/addtodopage.dart';
 import 'package:PlannerApp/model/todo/assignedtable.dart';
@@ -8,15 +7,14 @@ import 'package:flutter/material.dart';
 import 'model/Speech/speechgridview.dart';
 import 'model/todo/edittodopage.dart';
 import 'model/todo/utilities.dart';
-import 'package:PlannerApp/model/event/form_event.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
 import 'model/event/list_event.dart';
-import 'model/todo/edittodopage.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_it/get_it.dart';
 import 'ui/tab_page.dart';
-import 'package:PlannerApp/model/alarm.dart';
+import 'model/mapwork/map_view.dart';
+import 'package:PlannerApp/model/mapwork/map_view.dart';
+import 'package:flutter/cupertino.dart';
 
 GetIt locator = GetIt();
 
@@ -28,9 +26,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   @override
-
-
-    Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     return FutureBuilder(
       future: Firebase.initializeApp(),
       builder: (context, snapshot) {
@@ -65,19 +61,21 @@ class MyApp extends StatelessWidget {
                 '/assignedtable': (BuildContext context) =>
                     assigneddatatable(title: "Assigned task list"),
                 '/assignedtodopage': (BuildContext context) => assignedadd(),
-                '/SpeechToText': (BuildContext context) => SpeechText(title: "Speech to Text"),
+                '/SpeechToText': (BuildContext context) =>
+                    SpeechText(title: "Speech to Text"),
                 '/edittodopage': (BuildContext context) =>
                     edittodo(title: "Edit todo", id: 0),
                 '/EditSpeech': (BuildContext context) => edit_speech(texttoedit: " "),
                 '/speechgridview': (BuildContext context) => speechlist(),
-                '/alarm': (BuildContext context) => alarm(),
+                '/mapviewpage': (BuildContext context) =>
+                    MapView(title: 'Location'),
+
               });
         } else {
           return CircularProgressIndicator();
         }
       },
     );
-
   }
 }
 
@@ -92,9 +90,10 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   FlutterLocalNotificationsPlugin flutterNotif;
-  String _selectedParam;
   String task;
+  int _selectedParam;
   int val;
+  var _controller = TextEditingController();
 
   @override
   void initState() {
@@ -112,7 +111,7 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     List<LayoutExample> options = <LayoutExample>[
       LayoutExample(
-        title: 'Reminders',
+        title: 'Reminder',
         icon: Icons.add_alert,
         builder: buildColumnWidget,
       ),
@@ -136,10 +135,11 @@ class _MainPageState extends State<MainPage> {
               setState(() {
                 if (index == 0) {
                   _gototodolistPage(context);
-                }  if (index == 2) {
-                  _gotoalarmPage(context);
                 }
-                if(index==1){
+                if (index == 2) {
+                  _gotomapviewPage(context);
+                }
+                if (index == 1) {
                   _gotospeechtextPage(context);
                 }
               });
@@ -150,10 +150,10 @@ class _MainPageState extends State<MainPage> {
                 title: Text("Task manager"),
               ),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.record_voice_over), title: Text("Speech to text")),
+                  icon: Icon(Icons.record_voice_over),
+                  title: Text("Speech to text")),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.alarm), title: Text("Alarm"))
-
+                  icon: Icon(Icons.map), title: Text("Location"))
             ]),
       ),
     );
@@ -162,12 +162,13 @@ class _MainPageState extends State<MainPage> {
   Future<void> _gototodolistPage(context) async {
     await Navigator.pushNamed(context, '/utilities');
   }
+
   Future<void> _gotospeechtextPage(context) async {
     await Navigator.pushNamed(context, '/SpeechToText');
   }
 
-  Future<void> _gotoalarmPage(context) async {
-    await Navigator.pushNamed(context, '/alarm');
+  Future<void> _gotomapviewPage(context) async {
+    await Navigator.pushNamed(context, '/mapviewpage');
   }
 
   Widget listEvents() {
@@ -183,297 +184,315 @@ class _MainPageState extends State<MainPage> {
             Padding(
               padding: const EdgeInsets.all(15.0),
               child: TextField(
+                controller: _controller,
                 decoration: InputDecoration(
-                    hintText: "Reminder title: ", border: OutlineInputBorder()),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.lightBlue, width: 3.0),
+                  ),
+                  hintText: "Reminder title: ",
+                  border: OutlineInputBorder(),
+                  suffixIcon: IconButton(
+                    onPressed: () => _controller.clear(),
+                    icon: Icon(Icons.clear),
+                  ),
+                ),
                 onChanged: (_val) {
                   task = _val;
                 },
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                DropdownButton(
-                  value: _selectedParam,
-                  items: [
-                    DropdownMenuItem(
-                      child: Text("Seconds"),
-                      value: "Seconds",
-                    ),
-                    DropdownMenuItem(
-                      child: Text("Minutes"),
-                      value: "Minutes",
-                    ),
-                    DropdownMenuItem(
-                      child: Text("Hour"),
-                      value: "Hour",
-                    ),
-                  ],
-                  hint: Text(
-                    "Select Your Field.",
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),
-                  ),
-                  onChanged: (_val) {
-                    setState(() {
-                      _selectedParam = _val;
-                    });
-                  },
-                ),
-                DropdownButton(
-                  value: val,
-                  items: [
-                    DropdownMenuItem(
-                      child: Text("1"),
-                      value: 1,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("2"),
-                      value: 2,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("3"),
-                      value: 3,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("4"),
-                      value: 4,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("5"),
-                      value: 5,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("6"),
-                      value: 6,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("7"),
-                      value: 7,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("8"),
-                      value: 8,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("9"),
-                      value: 9,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("10"),
-                      value: 10,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("11"),
-                      value: 11,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("12"),
-                      value: 12,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("13"),
-                      value: 13,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("14"),
-                      value: 14,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("15"),
-                      value: 15,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("16"),
-                      value: 16,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("17"),
-                      value: 17,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("18"),
-                      value: 18,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("19"),
-                      value: 19,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("20"),
-                      value: 20,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("21"),
-                      value: 21,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("22"),
-                      value: 22,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("23"),
-                      value: 23,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("24"),
-                      value: 24,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("25"),
-                      value: 25,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("26"),
-                      value: 26,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("27"),
-                      value: 27,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("28"),
-                      value: 28,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("29"),
-                      value: 29,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("30"),
-                      value: 30,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("31"),
-                      value: 31,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("32"),
-                      value: 32,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("33"),
-                      value: 33,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("34"),
-                      value: 34,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("35"),
-                      value: 35,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("36"),
-                      value: 36,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("37"),
-                      value: 37,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("39"),
-                      value: 39,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("40"),
-                      value: 40,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("41"),
-                      value: 41,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("42"),
-                      value: 42,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("43"),
-                      value: 43,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("44"),
-                      value: 44,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("45"),
-                      value: 45,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("46"),
-                      value: 46,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("47"),
-                      value: 47,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("48"),
-                      value: 48,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("49"),
-                      value: 49,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("50"),
-                      value: 50,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("51"),
-                      value: 51,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("52"),
-                      value: 52,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("53"),
-                      value: 53,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("54"),
-                      value: 54,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("55"),
-                      value: 55,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("56"),
-                      value: 56,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("57"),
-                      value: 57,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("58"),
-                      value: 58,
-                    ),
-                    DropdownMenuItem(
-                      child: Text("59"),
-                      value: 59,
-                    ),
-                  ],
-                  hint: Text(
-                    "Select Value",
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),
-                  ),
-                  onChanged: (_val) {
-                    setState(() {
-                      val = _val;
-                    });
-                  },
-                ),
-              ],
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  SizedBox(
+                      width: 100.0,
+                      height: 60.0,
+                      child: CupertinoPicker(
+                        magnification: 1.1,
+                        itemExtent: 40,
+                        onSelectedItemChanged: (int index) {
+                          _selectedParam = index;
+                          print(_selectedParam);
+                        },
+                        children: <Widget>[
+                          Text("Seconds",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("Minutes",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("Hours",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                        ],
+                      )),
+                  SizedBox(
+                      width: 100.0,
+                      height: 60.0,
+                      child: CupertinoPicker(
+                        magnification: 1.1,
+                        itemExtent: 40,
+                        onSelectedItemChanged: (int index) {
+                          val = index + 1;
+                          print(val);
+                        },
+                        children: <Widget>[
+                          Text("1",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("2",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("3",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("4",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("5",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("6",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("7",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("8",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("9",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("10",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("11",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("12",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("13",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("14",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("15",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("16",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("17",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("18",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("19",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("20",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("21",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("22",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("23",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("24",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("25",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("26",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("27",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("28",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("29",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("30",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("31",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("32",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("33",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("34",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("35",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("36",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("37",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("38",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("39",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("40",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("41",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("42",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("43",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("44",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("45",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("46",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("47",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("48",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("49",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("50",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("51",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("52",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("53",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("54",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("55",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("56",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("57",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("58",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                          Text("59",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  decoration: TextDecoration.none)),
+                        ],
+                      )),
+                ],
+              ),
             ),
-            RaisedButton(
+            SizedBox(height: 10),
+            FlatButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5.0),
+                  side: BorderSide(color: Colors.blueGrey)),
               onPressed: _showNotification,
-              child: new Text('Set Reminder With Notification'),
+              color: Colors.blue,
+              textColor: Colors.white,
+              child: new Text('Set Timed Reminder With Notification',
+                  style: new TextStyle(fontSize: 16.0)),
             )
           ],
         ),
@@ -491,9 +510,9 @@ class _MainPageState extends State<MainPage> {
 
     var scheduledTime;
 
-    if (_selectedParam == "Seconds") {
+    if (_selectedParam == 0) {
       scheduledTime = DateTime.now().add(Duration(seconds: val));
-    } else if (_selectedParam == "Minute") {
+    } else if (_selectedParam == 1) {
       scheduledTime = DateTime.now().add(Duration(minutes: val));
     } else {
       //slected hour
