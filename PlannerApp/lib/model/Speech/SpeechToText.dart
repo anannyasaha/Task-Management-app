@@ -125,6 +125,7 @@ class _SpeechTextState extends State<SpeechText> {
               textStyle: const TextStyle(
                 fontSize: 32.0,
                 fontWeight: FontWeight.w400,
+                color: Colors.black
               ),
 
 

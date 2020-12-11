@@ -85,7 +85,7 @@ class _addtodoState extends State<addtodo> {
                           DateTime date=await showDatePicker(
                               context: context,
                               initialDate: DateTime.now(),
-                              firstDate: DateTime(2020),
+                              firstDate: DateTime.now(),
                               lastDate: DateTime(2021));
                           setState(() {
                             dateoftodo=toDateString(date);
@@ -147,7 +147,7 @@ class _addtodoState extends State<addtodo> {
 
                     addtodo(newtodo);
 
-                    SnackBar sbforaddingtodo=new SnackBar(content: Text("Todo has been added"));
+                    SnackBar sbforaddingtodo=new SnackBar(content: Text("Task has been added"));
                     Scaffold.of(context).showSnackBar(sbforaddingtodo);
                     //List todos= await _todomodel.getAlltodos();
                     //Navigator.of(context).pop(todos);
