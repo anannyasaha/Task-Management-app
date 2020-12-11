@@ -185,75 +185,63 @@ class _MainPageState extends State<MainPage> {
 
   Widget buildColumnWidget() {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: TextField(
-                controller: _controller,
-                decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.lightBlue, width: 3.0),
-                  ),
-                  hintText: "Reminder title: ",
-                  border: OutlineInputBorder(),
-                  suffixIcon: IconButton(
-                    onPressed: () => _controller.clear(),
-                    icon: Icon(Icons.clear),
-                  ),
-                ),
-                onChanged: (_val) {
-                  task = _val;
-                },
+      body: ListView(
+        padding: EdgeInsets.symmetric(horizontal: 16),
+        children: [
+          TextField(
+            controller: _controller,
+            decoration: InputDecoration(
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.lightBlue, width: 3.0),
+              ),
+              hintText: "Reminder title: ",
+              border: OutlineInputBorder(),
+              suffixIcon: IconButton(
+                onPressed: () => _controller.clear(),
+                icon: Icon(Icons.clear),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  CupertinoTheme(
-                    data: CupertinoThemeData(
-                      textTheme: CupertinoTextThemeData(
-                        dateTimePickerTextStyle: TextStyle(
-                          color: bright == Brightness.dark? Colors.white : Colors.black45,
-                        ),
-                      )
-                    ),
+            onChanged: (_val) {
+              task = _val;
+            },
+          ), SizedBox(height: 30.0),
 
-                    child: CupertinoTimerPicker(
-                      mode: CupertinoTimerPickerMode.hms,
-                      minuteInterval: 1,
-                      secondInterval: 1,
-                      initialTimerDuration: new Duration(),
-                      onTimerDurationChanged: (Duration _picked) {
-                        setState(() {
-                          hrs = _picked.inHours;
-                          mins = _picked.inMinutes;
-                          sec = _picked.inSeconds;
-                        });
-                      },
-                    ),
-                  ),
-                ],
+          CupertinoTheme(
+            data: CupertinoThemeData(
+              textTheme: CupertinoTextThemeData(
+                dateTimePickerTextStyle: TextStyle(
+                  color: bright == Brightness.dark? Colors.white : Colors.black45,
+                ),
               ),
             ),
-            SizedBox(height: 10),
-            FlatButton(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5.0),
-                  side: BorderSide(color: Colors.blueGrey)),
-              onPressed: _showNotification,
-              color: Colors.blue,
-              textColor: Colors.white,
-              child: new Text('Set Timed Reminder With Notification',
-                  style: new TextStyle(fontSize: 16.0)),
-            )
-          ],
-        ),
-      ),
+
+            child: CupertinoTimerPicker(
+              mode: CupertinoTimerPickerMode.hms,
+              minuteInterval: 1,
+              secondInterval: 1,
+              initialTimerDuration: new Duration(),
+              onTimerDurationChanged: (Duration _picked) {
+                setState(() {
+                  hrs = _picked.inHours;
+                  mins = _picked.inMinutes;
+                  sec = _picked.inSeconds;
+                });
+              },
+            ),
+          ), SizedBox(height: 30.0),
+
+          FlatButton(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5.0),
+                side: BorderSide(color: Colors.blueGrey)),
+            onPressed: _showNotification,
+            color: Colors.blue,
+            textColor: Colors.white,
+            child: new Text('Set Timed Reminder With Notification',
+                style: new TextStyle(fontSize: 16.0)),
+          )
+        ],
+      )
     );
   }
 
