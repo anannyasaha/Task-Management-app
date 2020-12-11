@@ -29,6 +29,6 @@ MARTIN:
 
 
 ANANNYA:
-On the bottom tab bar is the too do list and the alarm
+On the bottom tab bar is the task manager and speech-to-text
 	-Task list: (implemented) there is a description of the task and date and time for that task to finish and there is a priority option and then it can assign task to other people.It sends the task details to the person via email to whom it is assigned.The tasks are stored in local storage.It has snackbar when a task is added.There is a datepicker and time picker for the every task.If the task is 4 days old it goes to the old task list. The drawer shows today task tomorrow task and assigned task.Assigned task uses the datatable.The datatable has the due date name and incharge name and the description of work.There is a delete button it deletes the task for ever.It doesnt add in the old task list.
 	-Speech to text: it recognises the voice of the user througha physical device. And the speech can be saved,edited,deleted through sqflite.There is snackbar when the text is added.The texts are added in gridview and each grid is clickable and you can edit the texts or delete the text.added text can be as long as you want.
