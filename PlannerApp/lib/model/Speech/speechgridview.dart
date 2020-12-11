@@ -12,7 +12,7 @@ class speechlist extends StatefulWidget {
 class _speechlistState extends State<speechlist> {
   Speechmodel speechmodel=new Speechmodel();
   TextEditingController controller=new TextEditingController();
-  List Speechlist;
+  List<dynamic> Speechlist = [];
   void initState() {
     super.initState();
     getspeechlist();
@@ -27,88 +27,89 @@ class _speechlistState extends State<speechlist> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title:Text('Speech list'),
-        actions: [IconButton(icon: Icon(Icons.add),
-    onPressed: (){
-      Navigator.of(context).pop();
+        actions: [
+          IconButton(icon: Icon(Icons.add),
+            onPressed: (){
+              Navigator.of(context).pop();
 
-    },),
-    ],
+            },),
+        ],
       ),
       body:Container(
         padding: EdgeInsets.all(10),
-        child: GridView.builder(
-            gridDelegate:SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount:3 ,
-            crossAxisSpacing: 4.0,
-            mainAxisSpacing: 4.0
-        ),
-             itemCount: Speechlist.length,
-             itemBuilder: (BuildContext context,int index){
-              return GestureDetector(
-                onTap: (){
-                  setState(() {
-                    controller.text=Speechlist[index].Description;
-                  });
-                  return showDialog(
-                    context: context,
-                    builder: (context) {
-                      return new AlertDialog(
-                         content: SingleChildScrollView(
-                           child: Column(
-                             children: [
-                              
-                                 Container(
-                                  color:whatColor(index),
-                                    child:TextField(
-                                      controller:controller,
-                                        maxLines: null,
-                                        style:TextStyle(fontSize:30))
-                             ),
-                               
-                               Row(
-                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                 children: [
-                                   RaisedButton(
-                                     child:Text("Save"),
-                                     onPressed: (){
-                                       editspeech(controller.text,Speechlist[index].id );
-                                       getspeechlist();
-                                       Navigator.of(context).pop();
-                                     },
-                                   ),
-                                   RaisedButton(
-                                     child:Text("Delete"),
-                                     onPressed: (){
-                                      deletespeech(Speechlist[index].id);
-                                       getspeechlist();
-                                       Navigator.of(context).pop();
-                                     },
-                                   )
-                                 ],
-                               )
-                             ],
-                           ),
-                         ),
-                    );
-                    }
-                  );
-
-                },
-                child: Container(
-                  padding:const EdgeInsets.all(10),
-                  child: Text(
-
-                      Speechlist[index].Description,
-                      style:TextStyle(fontSize:20)),
-                  color:whatColor(index),
-
-
+        child: Speechlist == null? Container()
+            : GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount:3 ,
+                  crossAxisSpacing: 4.0,
+                  mainAxisSpacing: 4.0
                 ),
-              );
 
-             },
+                itemCount: Speechlist.length,
+                itemBuilder: (BuildContext context,int index){
+                return GestureDetector(
+                  onTap: (){
+                    setState(() {
+                      controller.text=Speechlist[index].Description;
+                    });
+                    return showDialog(
+                      context: context,
+                      builder: (context) {
+                        return new AlertDialog(
+                           content: SingleChildScrollView(
+                             child: Column(
+                               children: [
 
-        ),
+                                   Container(
+                                    color:whatColor(index),
+                                      child:TextField(
+                                        controller:controller,
+                                          maxLines: null,
+                                          style:TextStyle(fontSize:30))
+                               ),
+
+                                 Row(
+                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                   children: [
+                                     RaisedButton(
+                                       child:Text("Save"),
+                                       onPressed: (){
+                                         editspeech(controller.text,Speechlist[index].id );
+                                         getspeechlist();
+                                         Navigator.of(context).pop();
+                                       },
+                                     ),
+                                     RaisedButton(
+                                       child:Text("Delete"),
+                                       onPressed: (){
+                                        deletespeech(Speechlist[index].id);
+                                         getspeechlist();
+                                         Navigator.of(context).pop();
+                                       },
+                                     )
+                                   ],
+                                 )
+                               ],
+                             ),
+                           ),
+                      );
+                      }
+                    );
+
+                  },
+                  child: Container(
+                    padding:const EdgeInsets.all(10),
+                    child: Text(
+
+                        Speechlist[index].Description,
+                        style:TextStyle(fontSize:20)),
+                    color:whatColor(index),
+
+
+                  ),
+                );
+               },
+            ),
       )
     );
   }
