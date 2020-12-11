@@ -34,7 +34,7 @@ class _assigneddatatableState extends State<assigneddatatable> {
             label:Text("Task For")
         ),
         DataColumn(
-            label:Text("due date")
+            label:Text("Due date")
         )
       ],
       rows:
