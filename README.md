@@ -1,3 +1,25 @@
+Contributions:
+
+Michael: 
+  +Reminders with notifications
+  +Reminder UI
+  +maps
+  +geo location, geocoding
+  
+  
+Martin:
+  +Events
+  +Event UI
+  +firebase/cloud storage
+  +Reminder UI
+
+Anannya:
+  +
+
+
+
+
+
 # Major Group Project
 The starter code for the major group project.
 
