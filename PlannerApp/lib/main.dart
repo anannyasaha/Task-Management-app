@@ -4,6 +4,7 @@ import 'package:PlannerApp/model/todo/assignedtable.dart';
 import 'package:PlannerApp/model/todo/assignedtodopage.dart';
 import 'package:PlannerApp/model/Speech/SpeechToText.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'model/Speech/speechgridview.dart';
 import 'model/todo/edittodopage.dart';
 import 'model/todo/utilities.dart';
@@ -91,13 +92,17 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   FlutterLocalNotificationsPlugin flutterNotif;
   String task;
-  int _selectedParam;
-  int val;
+
+  int hrs, mins, sec;
+
   var _controller = TextEditingController();
+  var bright;
 
   @override
   void initState() {
     super.initState();
+
+    //initialize notifications
     var androidInitialize = new AndroidInitializationSettings('app_icon');
     var iOSinitialize = new IOSInitializationSettings();
     var initializationsSettings =
@@ -105,6 +110,9 @@ class _MainPageState extends State<MainPage> {
     flutterNotif = new FlutterLocalNotificationsPlugin();
     flutterNotif.initialize(initializationsSettings,
         onSelectNotification: notificationSelected);
+
+    //initialize cupertino themes
+    bright = SchedulerBinding.instance.window.platformBrightness;
   }
 
   @override
@@ -206,280 +214,29 @@ class _MainPageState extends State<MainPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  SizedBox(
-                      width: 100.0,
-                      height: 60.0,
-                      child: CupertinoPicker(
-                        magnification: 1.1,
-                        itemExtent: 40,
-                        onSelectedItemChanged: (int index) {
-                          _selectedParam = index;
-                          print(_selectedParam);
-                        },
-                        children: <Widget>[
-                          Text("Seconds",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("Minutes",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("Hours",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                        ],
-                      )),
-                  SizedBox(
-                      width: 100.0,
-                      height: 60.0,
-                      child: CupertinoPicker(
-                        magnification: 1.1,
-                        itemExtent: 40,
-                        onSelectedItemChanged: (int index) {
-                          val = index + 1;
-                          print(val);
-                        },
-                        children: <Widget>[
-                          Text("1",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("2",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("3",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("4",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("5",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("6",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("7",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("8",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("9",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("10",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("11",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("12",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("13",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("14",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("15",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("16",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("17",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("18",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("19",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("20",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("21",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("22",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("23",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("24",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("25",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("26",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("27",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("28",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("29",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("30",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("31",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("32",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("33",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("34",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("35",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("36",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("37",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("38",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("39",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("40",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("41",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("42",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("43",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("44",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("45",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("46",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("47",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("48",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("49",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("50",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("51",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("52",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("53",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("54",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("55",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("56",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("57",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("58",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                          Text("59",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none)),
-                        ],
-                      )),
+                  CupertinoTheme(
+                    data: CupertinoThemeData(
+                      textTheme: CupertinoTextThemeData(
+                        dateTimePickerTextStyle: TextStyle(
+                          color: bright == Brightness.dark? Colors.white : Colors.black45,
+                        ),
+                      )
+                    ),
+
+                    child: CupertinoTimerPicker(
+                      mode: CupertinoTimerPickerMode.hms,
+                      minuteInterval: 1,
+                      secondInterval: 1,
+                      initialTimerDuration: new Duration(),
+                      onTimerDurationChanged: (Duration _picked) {
+                        setState(() {
+                          hrs = _picked.inHours;
+                          mins = _picked.inMinutes;
+                          sec = _picked.inSeconds;
+                        });
+                      },
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -508,21 +265,8 @@ class _MainPageState extends State<MainPage> {
     var generalNotificationDetails =
         new NotificationDetails(androidDetails, IOSDetails);
 
-    var scheduledTime;
-
-    if (_selectedParam == 0) {
-      scheduledTime = DateTime.now().add(Duration(seconds: val));
-    } else if (_selectedParam == 1) {
-      scheduledTime = DateTime.now().add(Duration(minutes: val));
-    } else {
-      //slected hour
-      scheduledTime = DateTime.now().add(Duration(hours: val));
-    }
-
-    // var scheduledTime = DateTime.now().add(Duration(seconds: 5));
-
-    flutterNotif.schedule(
-        1, "Time Reached ", task, scheduledTime, generalNotificationDetails);
+    var scheduledTime = DateTime.now().add(Duration(hours: hrs, minutes: mins, seconds: sec));
+    flutterNotif.schedule(1, "Time Reached ", task, scheduledTime, generalNotificationDetails);
   }
 
   Future notificationSelected(String payload) async {
