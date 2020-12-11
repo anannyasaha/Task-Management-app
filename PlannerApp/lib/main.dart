@@ -228,7 +228,7 @@ class _MainPageState extends State<MainPage> {
                 });
               },
             ),
-          ), SizedBox(height: 30.0),
+          ), SizedBox(height: 5.0),
 
           FlatButton(
             shape: RoundedRectangleBorder(
@@ -238,7 +238,9 @@ class _MainPageState extends State<MainPage> {
             color: Colors.blue,
             textColor: Colors.white,
             child: new Text('Set Timed Reminder With Notification',
-                style: new TextStyle(fontSize: 16.0)),
+                textAlign: TextAlign.center,
+                style: new TextStyle(fontSize: 16.0)
+            ),
           )
         ],
       )
