@@ -16,7 +16,7 @@ For Location/maps, click on the Location button on the bottom right and it will 
 
 
 MARTIN:
--Events: (not yet finished) will be for things that you intend to plan for past the current day. Will include details such
+-Events: for things that you intend to plan for past the current day. Will include details such
 		 as time, location, links, text details...
 ->Tap the + button to add an event
 ->Fill out the form
