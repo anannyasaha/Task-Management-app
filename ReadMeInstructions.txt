@@ -3,7 +3,7 @@ NOTE: contributions are listed under README.md
 Instructions on how to use the app:
 +features written by those who built them and what they had in mind for the apps use
 
-MICAEL:
+MICHAEL:
 -Reminders: (implemented) are for things you will do within the day shortly and only need a text prompt
 		-to use reminders, write something in the textfield and then set a time type (seconds, mins, hour) and then
 		 a time value and wait for the time to count down and your notification to appear. After is appears, click on it
