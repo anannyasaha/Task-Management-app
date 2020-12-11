@@ -14,12 +14,12 @@ Martin:
   +Reminder UI
 
 Anannya:
-  +Speech to Text
-  +Task Manager
-  +UI of Speech to Text
+  +Speech to Text UI
   +Task Manager UI
-
-
+  +Local Storage
+  +Dialogues,Pickers
+  +Data Table
+  
 
 
 
