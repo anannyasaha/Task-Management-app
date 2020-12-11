@@ -14,7 +14,10 @@ Martin:
   +Reminder UI
 
 Anannya:
-  +
+  +Speech to Text
+  +Task Manager
+  +UI of Speech to Text
+  +Task Manager UI
 
 
 
