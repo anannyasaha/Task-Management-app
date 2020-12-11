@@ -1,20 +1,20 @@
 Contributions:
 
 Michael: 
-  -Reminders with notifications
-  -Reminder UI
-  -maps
-  -geo location, geocoding
+  +Reminders with notifications
+  +Reminder UI
+  +maps
+  +geo location, geocoding
   
   
 Martin:
-  -Events
-  -Event UI
-  -firebase/cloud storage
-  -Reminder UI
+  +Events
+  +Event UI
+  +firebase/cloud storage
+  +Reminder UI
 
 Anannya:
-  -
+  +
 
 
 
